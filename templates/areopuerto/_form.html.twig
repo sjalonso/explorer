@@ -1,0 +1,47 @@
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestionar Aeropuerto</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                    {#Fila1#}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                            {{ form_label(form.siglas, null, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(form.siglas, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_label(form.pais, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form.pais, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_label(form.provincia, null, {'label_attr': {'class': 'control-label'}}) }}
+                                {{ form_widget(form.provincia, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>           
+                    </div>
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('ADICIONAR') }}</button>
+                        
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

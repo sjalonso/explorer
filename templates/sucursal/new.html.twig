@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    {{ include('sucursal/_form.html.twig') }}
+
+    <a href="{{ path('sucursal_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

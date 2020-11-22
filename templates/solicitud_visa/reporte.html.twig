@@ -1,0 +1,462 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Reporte Solicitudes de Visa</h3>
+            </div>
+
+            <!-- /.box-header -->
+            <div class="box-body">
+
+                <table>
+                    <tr>
+                        <td>Inicio de trámite: </td>
+                            <td>
+                                <div class="input-daterange input-group" id="inicio_tramite">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <input type="text" id="iniciofechaini" name="iniciofechaini" size="12" class="form-control kt-input "  />
+                                            </td>
+                                            <td>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                </div>
+                                            </td>
+                                            <td style="display: none">
+                                                <input type="text" id="iniciofechafin" name="iniciofechafin" size="12" class="form-control kt-input " />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td>Final de  trámite: </td>
+                        <td>
+                            <div class="input-daterange input-group" id="fin_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="finfechaini" name="finfechaini" size="12" class="form-control kt-input "  placeholder=""  />
+                                        </td>
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td style="display: none">
+                                            <input type="text" id="finfechafin" name="finfechafin" size="12" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td>Fecha solicitud: </td>
+                        <td>
+                            <div class="input-daterange input-group" id="fecha_solicitud">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="fechainisol" name="fechainisol" class="form-control kt-input "  placeholder="Inicio"  />
+                                        </td>
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="fechafinsol" name="fechafinsol" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td>Estado solicitud: </td>
+                        <td>
+                            <select name="estado" id="estado" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                <option value="Nueva">Nueva</option>
+                                <option value="Procesando">Procesando</option>
+                                <option value="Denegada">Denegada</option>
+                                <option value="Lista">Lista</option>
+                            </select>
+                        </td>
+
+                    </tr>
+                </table>
+                <br>
+
+            <table id="example4" class="table table-bordered table-striped" width="100%">
+
+
+                    <thead>
+                        <tr>
+                            {#<th>Id</th>#}
+                            <th>Nombre y Apellidos</th>
+                            <th>Pasaporte</th>
+                            <th>País</th>
+                            <th>Inicio trámite</th>
+                            <th>Fin trámite</th>
+                            <th>Fecha solicitud</th>
+                            <th>Estado solicitud</th>
+                            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                                <th>Sucursal</th>
+                            {% endif %}
+                            <th>accciones</th>
+                        </tr>
+                    </thead>
+            <tbody>
+        {% set contador = 1 %}
+        {% for solicitud_visa in solicitud_visas %}
+        
+            <tr>
+            {% if  solicitud_visa.EstadoSolicitudVisa   == "Nueva"  %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-primary bg-info "> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.pais }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.fechainiciotramite ? solicitud_visa.fechainiciotramite|date('Y-m-d') : '' }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.fechafinaltramite ? solicitud_visa.fechafinaltramite|date('Y-m-d') : '' }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : '' }}</td>
+                <td class="text-primary bg-info">{{ solicitud_visa.EstadoSolicitudVisa }}</td>
+                  {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-primary  bg-info">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+           {% elseif solicitud_visa.EstadoSolicitudVisa   == "Lista" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-success bg-success"> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.pais }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.fechainiciotramite ? solicitud_visa.fechainiciotramite|date('Y-m-d') : '' }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.fechafinaltramite ? solicitud_visa.fechafinaltramite|date('Y-m-d') : '' }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : '' }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.EstadoSolicitudVisa }}</td>
+              {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-success  bg-success">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+           {% elseif solicitud_visa.EstadoSolicitudVisa   == "Denegada" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-danger bg-danger">  {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.pais }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.fechainiciotramite ? solicitud_visa.fechainiciotramite|date('Y-m-d') : '' }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.fechafinaltramite ? solicitud_visa.fechafinaltramite|date('Y-m-d') : '' }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : '' }}</td>
+                <td class="text-danger  bg-danger">{{ solicitud_visa.EstadoSolicitudVisa }}</td>
+              {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-danger  bg-danger">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+            {% elseif solicitud_visa.EstadoSolicitudVisa   == "Procesando" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-warning bg-warning"> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.pais }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.fechainiciotramite ? solicitud_visa.fechainiciotramite|date('Y-m-d') : '' }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.fechafinaltramite ? solicitud_visa.fechafinaltramite|date('Y-m-d') : '' }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : '' }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.EstadoSolicitudVisa }}</td>
+                 {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-warning  bg-warning">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+            {% endif %}
+                <td>
+                    <a href="{{ path('solicitud_visa_show_rep', {'id': solicitud_visa.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    <a href="{{ path('printsolicitudvisa_show', {'id':solicitud_visa.id}) }}"><button class="fa fa-print btn-sm"></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <td colspan="3">No se encontraron registros</td>
+                        </tr>
+            {% set contador = contador + 1 %}
+            {% endfor %}
+                    
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total:</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+
+        </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var resultado = true;
+                var inicio_min  = $('#iniciofechaini').val();
+                var inicio_max  = $('#iniciofechafin').val();
+                var fin_min  = $('#finfechaini').val();
+                var fin_max  = $('#finfechafin').val();
+                var sol_min  = $('#fechainisol').val();
+                var sol_max  = $('#fechafinsol').val();
+                var estado  = $('#estado').val();
+                var inicioTramite = aData[3];
+                var finTramite = aData[4];
+                var fechasol = aData[5];
+                var estadoCol = aData[6];
+                var bool_inicio_min = false;
+                var bool_inicio_max = false;
+                var bool_fin_min = false;
+                var bool_fin_max = false;
+                var bool_sol_min = false;
+                var bool_sol_max = false;
+                var bool_estado = false;
+
+                var fechaInicioTramite = "";
+                var fechaFinTramite = "";
+                var fechaSolicitud = "";
+
+                if(inicioTramite != "") {
+                    fechaTramite = Date.parse(inicioTramite);
+                    fechaInicioTramite = new Date(fechaTramite);
+                }
+                if(finTramite != "") {
+                    fechaTramite = Date.parse(finTramite);
+                    fechaFinTramite = new Date(fechaTramite);
+                }
+                if(fechasol != "") {
+                    fechaSol = Date.parse(fechasol);
+                    fechaSolicitud = new Date(fechaSol);
+                }
+                //INICIO TRAMITE
+                if (inicio_min != "" && inicio_max == "") {
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial)
+                        bool_inicio_min = true;
+                    else bool_inicio_min = false;
+                }
+                else if(inicio_max != "" && inicio_min == "") {
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite <= fechaFinal)
+                        bool_inicio_max = true;
+                    else bool_inicio_max = false;
+                }
+                else if(inicio_max != "" && inicio_min != ""){
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial && fechaInicioTramite <= fechaFinal) {
+                        bool_inicio_min = true;
+                        bool_inicio_max = true;
+                    }
+                    else {
+                        bool_inicio_min = false;
+                        bool_inicio_max = false;
+                    }
+                }
+                //FIN TRAMITE
+                if (fin_min != "" && fin_max == "") {
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial)
+                        bool_fin_min = true;
+                    else bool_fin_min = false;
+                }
+                else if(fin_max != "" && fin_min == "") {
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite <= fechaFinal)
+                        bool_fin_max = true;
+                    else bool_fin_max = false;
+                }
+                else if(fin_max != "" && fin_min != ""){
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial && fechaFinTramite <= fechaFinal) {
+                        bool_fin_min = true;
+                        bool_fin_max = true;
+                    }
+                    else {
+                        bool_fin_min = false;
+                        bool_fin_max = false;
+                    }
+                }
+                //FECHA SOLICITUD
+                if (sol_min != "" && sol_max == "") {
+                    fechaMinSol = Date.parse(sol_min);
+                    fechaInicial = new Date(fechaMinSol);
+
+                    if (fechaSolicitud != "" && fechaSolicitud >= fechaInicial)
+                        bool_sol_min = true;
+                    else bool_sol_min = false;
+                }
+                else if(sol_max != "" && sol_min == "") {
+                    fechaMaxSol = Date.parse(sol_max);
+                    fechaFinal = new Date(fechaMaxSol);
+
+                    if (fechaSolicitud != "" && fechaSolicitud <= fechaFinal)
+                        bool_sol_max = true;
+                    else bool_sol_max = false;
+                }
+                else if(sol_max != "" && sol_min != ""){
+                    fechaMinSol = Date.parse(sol_min);
+                    fechaInicial = new Date(fechaMinSol);
+
+                    fechaMaxSol = Date.parse(sol_max);
+                    fechaFinal = new Date(fechaMaxSol);
+
+                    if (fechaSolicitud != "" && fechaSolicitud >= fechaInicial && fechaSolicitud <= fechaFinal) {
+                        bool_sol_min = true;
+                        bool_sol_max = true;
+                    }
+                    else {
+                        bool_sol_min = false;
+                        bool_sol_max = false;
+                    }
+                }
+
+                if(estado != "Seleccione"){
+                    if(estado == estadoCol)
+                        bool_estado = true;
+                    else bool_estado = false;
+                }
+
+                if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                || fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max
+                    || sol_min != "" && !bool_sol_min || sol_max != "" && !bool_sol_max
+                    || estado != "Seleccione" && !bool_estado)
+                        resultado = false;
+
+                return resultado;
+            }
+        );
+
+        $(document).ready(function() {
+            var table = $('#example4').DataTable({
+                responsive: true,
+                language:{
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrado registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total e _MAX_ registros)",
+                    "sInfoPostFix":"",
+                    "sSearch": "BUSCAR:",
+                    "paginate":{
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+
+                dom: '<"col-md-2 inline"l><"col-md-4 inline"B><"col-md-6 inline"f>rt<"col-md-6 inline"i><"col-md-6 inline"p>',
+                buttons: [
+                    {extend: 'print', text: 'Imprimir', footer: true, orientation: 'landscape', pagesize: 'A4',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5,6,7]
+                        },
+                        customize: function(doc){
+                            doc.content[1].table.widths=[
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%'
+                            ]
+                        }
+                    }
+                ],
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+
+                    // Update footer
+                    $( api.column(1).footer() ).html(
+                            + display.length +' solicitudes'
+                    );
+                }
+            });
+
+            $('#iniciofechaini').change( function() {
+                ini = $('#iniciofechaini').val()
+                $('#iniciofechafin').val(ini);
+            } );
+
+            $('#finfechaini').change( function() {
+                fin = $('#finfechaini').val()
+                $('#finfechafin').val(fin);
+            } );
+
+            $('.input-daterange').change( function() {
+                table.draw();
+            } );
+
+            $('#estado').change( function() {
+                table.draw();
+            } );
+        });
+
+        $('#inicio_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+        $('#fin_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+
+        });
+
+        $('#fecha_solicitud').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+
+        });
+
+//
+    </script>
+
+{% endblock %}

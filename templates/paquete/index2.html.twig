@@ -1,0 +1,322 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+     <!-- paquetes listos -->
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista Paquetes Promocionales</h3>
+  
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table>
+                    <tr>
+                        <td>Fecha de Ida: </td>
+                        <td>
+                            <div class="input-daterange input-group" id="inicio_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="iniciofechaini" name="iniciofechaini" size="10" class="form-control kt-input " />
+                                        </td>
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td style="display: none">
+                                            <input type="text" id="iniciofechafin" name="iniciofechafin" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;</td>
+
+                        <td>Regreso:<span class="input-group-text"><i class="fa fa-calendar"></i></span> </td>
+                        <td>
+                            <div class="input-daterange input-group" id="fin_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="finfechaini"  name="finfechaini" size="10" class="form-control kt-input " />
+                                        </td>
+                                         <!--
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                          -->
+                                        <td style="display: none">
+                                            <input type="text" id="finfechafin" name="finfechafin" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;</td>
+                        
+                        <td colspan="3" >Ruta: </td>
+                        <td>
+                            <select name="ruta" id="ruta" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                {% for ruta in rutas %}
+                                    <option value='{{ ruta.nombreruta }}'>{{ ruta.nombreruta }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+
+               <table id="example3" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+                    <tr>
+                    <tr>
+                        <th>Código</th>
+                        <th>Fecha de ida</th>
+                        <th>Fecha de regreso</th>
+                        <th>Asientos Disponible</th>
+                        <th>Ruta</th>
+                        <th>Fecha límite</th>
+                        <th>accciones</th>
+                    </tr>
+                </thead>
+        <tbody>
+        
+        {% for paquete in paquetes %}
+        {% if  paquete.EstadoPaquete   == "Promocion"  %}
+            <tr>
+                <td>{{ paquete.codigopaquete }}</td>
+                <td>{{ paquete.fechaida ? paquete.fechaida|date('Y-m-d') : '' }}</td>
+                <td>{{ paquete.fecharegreso ? paquete.fecharegreso|date('Y-m-d') : '' }}</td>
+                <td>{{ paquete.cantasiento }}</td>
+                <td>{{ paquete.Ruta }}</td>
+                <td>{{ paquete.fechalimite ? paquete.fechalimite|date('Y-m-d') : '' }}</td>
+
+                <td>
+                    <div class="row">
+                        <div class="col-md-2">
+                            {% if is_granted("ROLE_ADMIN") %}
+                                {{ include('paquete/_duplicar_form.html.twig') }}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-7">
+                            <a href="{{ path('paquete_show', {'id': paquete.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                            <a href="{{ path('imprimeshow_show', {'id': paquete.id}) }}"><button class="fa fa-print btn-sm"></button></a>
+                            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_AEROLINEA") %}
+                                <a href="{{ path('paquete_edit', {'id': paquete.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+{% endif %}
+        {% else %}
+           <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_AEROLINEA") %}
+            <a href="{{ path('paquete_new') }}"><button class="btn btn-primary">CREAR NUEVO PAQUETE</button></a>
+        {% endif %}
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var resultado = true;
+                var inicio_min  = $('#iniciofechaini').val();
+                var inicio_max  = $('#iniciofechafin').val();
+                 var fin_min  = $('#finfechaini').val();
+                var fin_max  = $('#finfechafin').val();
+                var ruta  = $('#ruta').val();
+                var inicioTramite = aData[1];
+                var finTramite = aData[2];
+                var rutaCol = aData[4];
+                var bool_inicio_min = false;
+                var bool_inicio_max = false;
+                 var bool_fin_min = false;
+                var bool_fin_max = false;
+                var bool_ruta = false;
+                var fechaInicioTramite = "";
+                var fechaFinTramite = "";
+
+                if(inicioTramite != "") {
+                    fechaTramite = Date.parse(inicioTramite);
+                    fechaInicioTramite = new Date(fechaTramite);
+                }
+
+                 if(finTramite != "") {
+                    fechaTramite = Date.parse(finTramite);
+                    fechaFinTramite = new Date(fechaTramite);
+                }
+
+                if (inicio_min != "" && inicio_max == "") {
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial)
+                        bool_inicio_min = true;
+                    else bool_inicio_min = false;
+                }
+                else if(inicio_max != "" && inicio_min == "") {
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite <= fechaFinal)
+                        bool_inicio_max = true;
+                    else bool_inicio_max = false;
+                }
+                else if(inicio_max != "" && inicio_min != ""){
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial && fechaInicioTramite <= fechaFinal) {
+                        bool_inicio_min = true;
+                        bool_inicio_max = true;
+                    }
+                    else {
+                        bool_inicio_min = false;
+                        bool_inicio_max = false;
+                    }
+                }
+ if (fin_min != "" && fin_max == "") {
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial)
+                        bool_fin_min = true;
+                    else bool_fin_min = false;
+                }
+                else if(fin_max != "" && fin_min == "") {
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite <= fechaFinal)
+                        bool_fin_max = true;
+                    else bool_fin_max = false;
+                }
+                else if(fin_max != "" && fin_min != ""){
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial && fechaFinTramite <= fechaFinal) {
+                        bool_fin_min = true;
+                        bool_fin_max = true;
+                    }
+                    else {
+                        bool_fin_min = false;
+                        bool_fin_max = false;
+                    }
+                }
+
+
+                if(ruta != "Seleccione"){
+                    if(ruta == rutaCol)
+                        bool_ruta = true;
+                    else bool_ruta = false;
+                }
+
+                if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                || fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max || ruta != "Seleccione" && !bool_ruta
+                )
+                    resultado = false;
+               
+                if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                        || fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max || ruta != "Seleccione" && !bool_ruta
+                        
+                )
+                    resultado = false;
+              
+                return resultado;
+            }
+        );
+
+        $(document).ready(function() {
+
+            var table = $('#example3').DataTable();
+
+            $('#iniciofechaini').change( function() {
+                ini = $('#iniciofechaini').val()
+                $('#iniciofechafin').val(ini);
+            } );
+
+              $('#finfechaini').change( function() {
+                fin = $('#finfechaini').val()
+                $('#finfechafin').val(fin);
+            } );
+
+            $('.input-daterange').change( function() {
+               $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                       
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+
+            } );
+
+
+            $('#ruta').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                      
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+        
+
+        $('#inicio_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+         $('#fin_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+        });
+
+    </script>
+
+{% endblock %}

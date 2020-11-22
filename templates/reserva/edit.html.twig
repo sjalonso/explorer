@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <section class="content">
+        
+        <div class="row">
+          {% if is_granted("ROLE_ADMIN")  %}
+            {{ include('reserva/_form2.html.twig', {'button_label': 'ACTUALIZAR'}) }}
+             <a href="{{ path('reserva_index') }}"><button class="btn btn-success" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+            <p>
+            {{ include('reserva/_delete_form.html.twig') }}
+
+        {% elseif is_granted("ROLE_USER")  %}
+            {{ include('reserva/_form3.html.twig', {'button_label': 'ACTUALIZAR'}) }}
+             <a href="{{ path('reserva_index') }}"><button class="btn btn-success" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+            <p>
+           
+        {% endif %}
+        
+
+           
+
+        </div>
+    </section>
+{% endblock %}

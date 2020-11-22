@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <section class="content">
+      
+
+          {% if is_granted("ROLE_VISADO")  %}
+        <div class="row">
+            {{ include('solicitud_visa/_form3.html.twig', {'button_label': 'ACTUALIZAR'}) }}
+
+            <a href="{{ path('solicitud_visa_index') }}"><button class="btn btn-success" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+            <p>
+           
+
+        </div>
+        {% elseif is_granted("ROLE_ADMIN")  %}
+        <div class="row">
+            {{ include('solicitud_visa/_form2.html.twig', {'button_label': 'ACTUALIZAR'}) }}
+
+            <a href="{{ path('solicitud_visa_index') }}"><button class="btn btn-success" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+            <p>
+            {{ include('solicitud_visa/_delete_form.html.twig') }}
+
+        </div>
+
+         {% endif %}
+        
+    </section>
+{% endblock %}
+

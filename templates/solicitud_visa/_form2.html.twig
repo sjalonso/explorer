@@ -1,0 +1,189 @@
+{% block body %}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestionar Solicitud de Visa</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                 
+                 
+                    {#Fila0#}
+                    <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                               
+                                Fecha Solicitud de Visa (MM-DD-YYYY)
+                                {{ form_widget(form.fechasolicitud, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                               
+                                Fecha de Ida (MM-DD-YYYY)
+                                {{ form_widget(form.fechasalidaviaje, { attr:{ class:'js-datepicker' } }) }}
+                            </div>viaje
+                        </div>
+                   
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Cliente
+                            {#{{ form_label(form.Cliente, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.Cliente, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Estado Solicitud visa
+                                {#{{ form_label(form.EstadoSolicitudvisa, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.EstadoSolicitudvisa, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    {#Fin fila 0#}
+
+                    {#Fila1#}
+                    <div class="row">
+                    
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Dirección en Cuba
+                                {#{{ form_label(form.direccioncuba, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.direccioncuba, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Dirección extranjero (solo extranjeros)
+                                {#{{ form_label(form.direccionextranjero, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.direccionextranjero, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                País (solo extranjeros)
+                                {#{{ form_label(form.pais, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.pais, {'attr': {'class': 'form-control'}} )}} 
+                            </div>
+                        </div>
+                    </div>
+                    {#Fin fila 1#}
+
+                       {#Fila2#}
+                    <div class="row">
+                      
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Ocupación
+                                {#{{ form_label(form.ocupacion, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.ocupacion, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Lugar de trabajo
+                                {#{{ form_label(form.lugartrabajo, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.lugartrabajo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Duración estancia (Días)
+                                {#{{ form_label(form.duracionestancia, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.duracionestancia, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                Motivo de viaje
+                                {#{{ form_label(form.duracionestancia, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.motivo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    {#Fin fila 2#}
+
+                       {#Fila3#}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Fecha regreso (MM-DD-YYYY)
+                                {#{{ form_label(form.fecharegreso, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fecharegreso, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>   
+
+                          <div class="col-md-3">
+                            <div class="form-group">
+                                Dirección en Haití
+                                {#{{ form_label(form.direccionhaiti, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.direccionhaiti, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                ¿Has viajado a Haiti anteriormente?
+                                {#{{ form_label(form.viajehaiti, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.viajehaiti, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Estado civil
+                                {#{{ form_label(form.Estadocivil, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.Estadocivil, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Fecha inicio trámite (MM-DD-YYYY)
+                                {{ form_widget(form.fechainiciotramite, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Fecha final trámite (MM-DD-YYYY)
+                                {#{{ form_label(form.ocupacion, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechafinaltramite, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                  
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('GUARDAR') }}</button>
+                       
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    
+    <script>
+        $('.js-datepicker').datepicker({
+            format:'yyyy.MM.dd'
+        });
+    </script>
+{% endblock %}

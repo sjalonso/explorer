@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Usuario</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(registrationForm) }}
+                    {% if error != '' %}
+                        <div class="error" style="color: #b91a14">{{ error }}</div>
+                    {% endif %}
+                    {#Fila1#}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+
+                                {{ form_row(registrationForm.email) }}
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+
+                                {{ form_row(registrationForm.Sucursal) }}
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.nombre) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_row(registrationForm.activo) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                    {{ form_errors(registrationForm.roles) }}
+                                    Roles
+                                    {{ form_widget(registrationForm.roles) }}
+                                </div>
+                        </div>
+                    </div>
+
+                    <div style="float: right">
+                        <button class="btn btn-primary">Guardar</button>
+                        {{ form_end(registrationForm) }}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="{{ path('user_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+
+{% endblock %}
+

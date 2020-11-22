@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+     <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listas de Días de IDA </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+                <th>Id</th>
+                <th>Dia</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dia_ida in dia_idas %}
+            <tr>
+                <td>{{ dia_ida.id }}</td>
+                <td>{{ dia_ida.dia }}</td>
+                <td>
+                    <a href="{{ path('dia_ida_show', {'id': dia_ida.id}) }}"><button class="btn btn-sm btn-warning">Ver</button></a>
+                    <a href="{{ path('dia_ida_edit', {'id': dia_ida.id}) }}"><button class="btn btn-sm btn-success">Editar</button></a>
+                </td>
+            </tr>
+        {% else %}
+           <tr>
+                            <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="{{ path('dia_ida_new') }}"><button class="btn btn-primary">CREAR NUEVO DÍA</button></a>
+    </section>
+    {% endblock %}

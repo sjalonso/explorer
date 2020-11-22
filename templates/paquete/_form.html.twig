@@ -1,0 +1,308 @@
+
+{% block body %}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestionar Paquete</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                     {#Fila0#}
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.aerolineas) }}</div>
+                            <div class="form-group">
+                                Aerolinea
+                            {#{{ form_label(form.aerolineas, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.aerolineas, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.codigopaquete) }}</div>
+                            <div class="form-group">
+                                Código
+                            {#{{ form_label(form.codigopaquete, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.codigopaquete, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group ">
+                                Fecha ida (MM-DD-YYYY)
+                                {#{{ form_label(form.fechaida, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechaida, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Fecha regreso (MM-DD-YYYY)
+                                {#{{ form_label(form.fecharegreso, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fecharegreso, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+           
+                    </div>
+                    {#Fin fila 0#}
+
+                    
+                       {#Fila3#}
+                    <div class="row">
+                       <div class="col-md-3">
+                            <div class="form-group">
+                                Cantidad asientos Disponible
+                                {#{{ form_label(form.cantasiento, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.cantasiento, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>   
+                       
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Ruta
+                                {#{{ form_label(form.Ruta, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.Ruta, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>   
+
+                          <div class="col-md-3">
+                            <div class="form-group">
+                                Estado paquete
+                                {#{{ form_label(form.EstadoPaquete, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.EstadoPaquete, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                         <div class="col-md-3">
+                            <div class="form-group">
+                                Fecha limite (MM-DD-YYYY)
+                                {#{{ form_label(form.fecharegreso, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechalimite) }}
+                            </div>
+                        </div>
+
+                          <div class="col-md-6">
+                          <div class="error" style="color: #b91a14">{{ form_errors(form.descripcion) }}</div>
+                            <div class="form-group">
+                                Descripción
+                               {{ form_widget(form.descripcion, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                         <div class="col-md-3">
+                            <div class="form-group">
+                                Cantidad asientos original
+                                {#{{ form_label(form.cantasientooriginal, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.cantasientooriginal, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div> 
+
+
+                    </div>
+                    {#Fin fila 3#}
+
+                    {#Fin fila 1#}
+
+                       {#Fila2#}
+                        <div class="alert alert-info">
+                    <strong>Precios Precios Paquete en Cuba </strong> 
+                </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Adulto Cuba
+                            {#{{ form_label(form.preciocuba, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.preciocuba, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                      
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio infante Cuba
+                                {#{{ form_label(form.precioinfante, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.precioinfante, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+
+
+                            
+                    </div>
+                    {#Fin fila 2#}
+
+                    <div class="alert alert-info">
+                    <strong>Precios paquete Normal</strong> 
+                    </div>
+
+                  
+
+                      <div class="row" >
+               <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Infante
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.precioinfantedestino, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+              </div>
+                      <div class="row">
+                      <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación Simple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciodestino, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                      {#Fila2#}
+                  
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación doble
+                                {{ form_widget(form.preciodestinodoble, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación triple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciodestinotriple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación cuádruple
+                                {#{{ form_label(form.precioinfante, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciodestinocuadruple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+             </div>
+
+                <div class="alert alert-info">
+                    <strong>Precios Paquete Mini </strong> 
+                </div>
+                
+                     <div class="row" >
+               <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Infante
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciominininno, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+              </div>
+                      <div class="row">
+                      <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación Simple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciominisimple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                      {#Fila2#}
+                  
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación doble
+                                {{ form_widget(form.preciominidoble, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación triple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciominitriple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación cuádruple
+                                {#{{ form_label(form.precioinfante, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciominicuadruple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+             </div>
+
+                <div class="alert alert-info">
+                    <strong>Precios Paquete Mini sin visa </strong> 
+                </div>
+              <div class="row" >
+               <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Infante
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciomininvinfante, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+              </div>
+
+                      <div class="row">
+                      <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación Simple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciomininvsimple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                      {#Fila2#}
+                  
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación doble
+                                {{ form_widget(form.preciomininvdoble, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación triple
+                                {#{{ form_label(form.preciodestino, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciomininvtriple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Precio Habitación cuádruple
+                                {#{{ form_label(form.precioinfante, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.preciomininvcuadruple, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+             </div>
+                    {#Fin fila 2#}
+
+
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('ADICIONAR') }}</button>
+                        
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    
+    <script>
+        $('.js-datepicker').datepicker({
+            format:'yyyy.MM.dd'
+        });
+    </script>
+{% endblock %}

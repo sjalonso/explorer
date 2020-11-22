@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1>Create new EstadoPaquete</h1>
+
+    {{ include('estado_paquete/_form.html.twig') }}
+
+    <a href="{{ path('estado_paquete_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

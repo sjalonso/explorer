@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+  <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Aeropuertos</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+
+                <th>Siglas</th>
+                <th>País</th>
+                <th>Provincia</th>
+                <th>acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for areopuerto in areopuertos %}
+            <tr>
+
+                <td>{{ areopuerto.siglas }}</td>
+                <td>{{ areopuerto.pais }}</td>
+                <td>{{ areopuerto.provincia }}</td>
+                <td>
+                    <a href="{{ path('areopuerto_show', {'id': areopuerto.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                     {% if is_granted("ROLE_AEROLINEA" ) or is_granted("ROLE_ADMIN" ) %}
+                    <a href="{{ path('areopuerto_edit', {'id': areopuerto.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                     {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                            <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if is_granted("ROLE_AEROLINEA" ) or is_granted("ROLE_ADMIN" )%}
+        <a href="{{ path('areopuerto_new') }}"><button class="btn btn-primary">CREAR NUEVO AEROPUERTO</button></a>
+        {% endif %}
+    </section>
+      {% endblock %}

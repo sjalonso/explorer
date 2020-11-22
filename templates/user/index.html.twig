@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+     <section class="content">
+     {% include 'flashback.html.twig' %}
+      <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Usuarios</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre y Apellidos</th>
+                            <th>Correo</th>
+                            <th>Roles</th>
+                            <th>Sucursal</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.nombre }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {{ user.roles|join(', ') }}
+                                </td>
+                                <td>{{ user.Sucursal }}</td>
+                                <td>{% if user.activo %} SI {% else %} NO {% endif %}</td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <a title="Ver" href="{{ path('user_show', {'id': user.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                                            {% if is_granted("ROLE_ADMIN") %}
+                                                <a title="Editar" href="{{ path('user_edit', {'id': user.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                                             {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if("ROLE_SUPERADMIN" not in user.roles) %}
+                                                    <form method="post" action="{{ path('user_deshabilitar', {'id': user.id}) }}" onsubmit="return confirm('¿Seguro que desea cambiar el estado de este usuario?');">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('deshabilitar' ~ user.id) }}">
+                                                        {% if user.activo %}
+                                                            <button title="Deshabilitar" class="fa fa-toggle-off btn-sm"></button>
+                                                         {% else %}
+                                                             <button title="Habilitar" class="fa fa-toggle-on btn-sm"></button>
+                                                        {% endif %}
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <form method="post" action="{{ path('user_resetear', {'id': user.id}) }}" onsubmit="return confirm('¿Seguro que desea resetear este usuario?');">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('resetear' ~ user.id) }}">
+                                                    <button title="Resetear" class="fa fa-eraser btn-sm"></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">No se encontraron registros</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+         {% if  is_granted("ROLE_ADMIN" ) %}
+         <a href="{{ path('app_register') }}" class="btn btn-primary"> Crear usuario</a>
+        {% endif %} 
+     </section>
+      
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function () {
+            //crud.js
+            cs.hideFlashback();
+            cs.showRequired();
+
+        });
+    </script>
+
+{% endblock %}

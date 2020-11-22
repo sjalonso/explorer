@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Clientes</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+                <th>Título</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de nacimiento</th>
+                <th>Pasaporte</th>
+                {% if is_granted("ROLE_ADMIN") %}
+                 <th>Sucursal</th>
+                {% endif %}
+                
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.titulo }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.apellido }}</td>
+                <td>{{ cliente.fechanacimiento ? cliente.fechanacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ cliente.pasaporte }}</td>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <td>{{ cliente.sucursal }}</td>
+                {% endif %}
+               
+                <td>
+                    <a href="{{ path('cliente_show', {'id': cliente.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL")  %}
+                        <a href="{{ path('cliente_edit', {'id': cliente.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+           <tr>
+                <td colspan="3">No se encontraron registros</td>
+            </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL") %}
+            <a href="{{ path('cliente_new') }}"><button class="btn btn-primary">CREAR NUEVO CLIENTE</button></a>
+        {% endif %}
+    </section>
+    {% endblock %}

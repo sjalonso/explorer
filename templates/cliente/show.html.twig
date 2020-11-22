@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box">
+                    {% if error != '' %}
+                        <div class="error" style="color: #b91a14">{{ error }}</div>
+                    {% endif %}
+                    <div class="box-header">
+                        <h3 class="box-title">Cliente</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Nombre y Apellidos
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.nombre }} {{ cliente.apellido }}
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de nacimiento
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.fechanacimiento |date('Y-m-d') }}
+                                    </div>
+                                </div>
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Lugar de nacimiento
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.lugarnacimiento}}
+                                    </div>
+                                </div>
+
+                                    <div class="row">
+                                    <div class="col-md-2">
+                                        Nacionalidad
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.nacionalidad }}
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Pasaporte
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.pasaporte }}
+                                    </div>
+                                </div>
+
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Sexo
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.sexo }}
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Lugar de expedición
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.lugarexpedicion }}
+                                    </div>
+                                </div>
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de expiración
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.fechaexpiracion |date('Y-m-d') }}
+                                    </div>
+                                </div>
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de expedición
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.fechaexpedicion |date('Y-m-d') }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Teléfono
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.telefono }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Correo
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ cliente.correo }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body" style="display: flex">
+                                <a href="{{ path('cliente_index') }}"><button class="btn btn-primary" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+                            {% if is_granted("ROLE_ADMIN")  %}
+                                <a href="{{ path('cliente_edit', {'id': cliente.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">EDITAR</button></a>
+
+                                {{ include('cliente/_delete_form.html.twig') }}
+                             {% endif %}    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

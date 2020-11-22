@@ -1,0 +1,116 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestionar Reserva - Código Paquete: <strong>{{ codigopaquete }}</strong></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                    {% if error != '' %}
+                        <div class="error" style="color: #b91a14">{{ error }}</div>
+                    {% endif %}
+                     {#Fila0#}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.fechacreacion) }}</div>
+                            <div class="form-group">
+                                Fecha creación (MM-DD-YYYY)
+                            {#{{ form_label(form.fechacreacion) }}#}
+                            {{ form_widget(form.fechacreacion, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.Cliente) }}</div>
+                            <div class="form-group">
+                                Cliente
+                           
+                            {{ form_widget(form.Cliente, {'attr': {'class': 'form-control'}}) }}
+                           
+                            
+                            </div>
+                        </div>
+
+                        <div class="ocultar">
+                            <div class="col-md-3">
+                                <div class="error" style="color: #b91a14">{{ form_errors(form.EstadoReserva) }}</div>
+                                <div class="form-group">
+                                    Estado reserva
+                                {#{{ form_label(form.EstadoReserva, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.EstadoReserva, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.hospedaje) }}</div>
+                            <div class="form-group">
+                                Hospedaje
+                                {#{{ form_label(form.EstadoPaquete, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.hospedaje, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.infante) }}</div>
+                            <div class="form-group">
+                                 Infante
+                                {#{{ form_label(form.viajehaiti, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.infante, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                         <div class="col-md-3">
+                             <div class="error" style="color: #b91a14">{{ form_errors(form.tipopaquete) }}</div>
+                            <div class="form-group">
+                                 Tipo de paquete
+                                {#{{ form_label(form.viajehaiti, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.tipopaquete, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+
+                         <div class="col-md-3">
+                             <div class="error" style="color: #b91a14">{{ form_errors(form.descripcion) }}</div>
+                            <div class="form-group">
+                                Nota 
+                               {{ form_widget(form.descripcion, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    
+                    </div>
+
+
+                    {#Fin fila 0#}
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('ADICIONAR') }}</button>
+                        
+                    </div>
+
+                    {{ form_end(form) }}
+                    <a href="{{ path('cliente_new') }}"><button class="btn btn-primary">CREAR NUEVO CLIENTE</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        $('.ocultar').css('display', 'none');
+
+        $('.js-datepicker').datepicker({
+            format:'yyyy.MM.dd'
+        });
+    </script>
+{% endblock %}

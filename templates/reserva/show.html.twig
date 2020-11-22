@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Reserva</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body">
+                              <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de creación
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ reserva.fechacreacion |date('Y-m-d') }} 
+                                    </div>
+                                </div>
+
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Cliente
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ reserva.Cliente.nombre }}  {{ reserva.Cliente.apellido }} 
+                                    </div>
+                                </div>
+
+                                
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Pasaporte
+                                    </div>
+                                    <div class="col-md-10">
+                                       {{ reserva.Cliente.pasaporte }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Codigo de Paquete
+                                    </div>
+                                    <div class="col-md-10">
+                                     {{ reserva.paquete.codigopaquete }}
+                                
+                                        
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Tipo de Paquete
+                                    </div>
+                                    <div class="col-md-10">
+                                     {{ reserva.tipopaquete }}
+                                
+                                        
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Ruta
+                                    </div>
+                                    <div class="col-md-10">
+                                       {{ reserva.paquete.Ruta }}
+                                    </div>
+                                </div>
+                                
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        fecha ida
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ reserva.paquete.fechaida |date('Y-m-d') }} 
+                                    </div>
+                                </div>
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha regreso
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ reserva.paquete.fecharegreso |date('Y-m-d') }} 
+                                    </div>
+                                </div>
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        ¿Es infante?
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ reserva.infante ? 'Sí' : 'No' }}  
+                                    </div>
+                                </div>
+
+                            {% if  reserva.infante  == "0" %}
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Precio en Cuba
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ reserva.paquete.preciocuba }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Precio en destino
+                                    </div>
+                                    <div class="col-md-10">
+
+                                {% if  reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Simple"  %}
+                                        {{ reserva.paquete.preciodestino }} 
+                                 {% elseif  reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Doble"  %}       
+                                          {{ reserva.paquete.preciodestinodoble }}            
+                                 {% elseif  reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Triple" %}   
+                                        {{ reserva.paquete.preciodestinotriple }} 
+                                {% elseif  reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Cuádruple" %}
+                                        {{ reserva.paquete.preciodestinocuadruple }}
+                                {% elseif  reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Simple" %}
+                                        {{ reserva.paquete.preciominisimple }}
+                                {% elseif  reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Doble" %}    
+                                        {{ reserva.paquete.preciominidoble }}
+                               {% elseif  reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Triple" %}
+                                        {{ reserva.paquete.preciominitriple }}
+                                {% elseif  reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                                        {{ reserva.paquete.preciominicuadruple }}
+                                 {% elseif  reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Simple" %}
+                                        {{ reserva.paquete.precimininvsimple }}
+                                 {% elseif  reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Doble" %}
+                                        {{ reserva.paquete.preciomininvdoble }}
+                                 {% elseif  reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Triple" %}
+                                        {{ reserva.paquete.preciomininvtriple }}
+                                 {% elseif  reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                                    {{ reserva.paquete.preciomininvcuadruple }}
+                                {% endif %}     
+                                    </div>
+                                </div>
+                                {% elseif reserva.infante   == "1" %}
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Precio infante Cuba
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ reserva.paquete.precioinfante }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Precio infante destino
+                                    </div>
+                                    <div class="col-md-10">
+                                    {% if  reserva.tipopaquete == "Paquete Normal"   %}
+                                        {{ reserva.paquete.precioinfantedestino }} 
+                                     {% elseif  reserva.tipopaquete == "Mini paquete con visa"  %}
+                                        {{ reserva.paquete.preciominininno }} 
+                                     {% elseif  reserva.tipopaquete == "Mini paquete sin visa"  %}   
+                                        {{ reserva.paquete.preciomininvinfante }}
+                                      {% endif %}    
+                                    </div>
+                                </div>
+                                     {% endif %}
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Estado de Reserva
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ reserva.EstadoReserva  }} 
+                                    </div>
+                                </div>
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Nota
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ reserva.descripcion  }} 
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body" style="display: flex">
+                                <a href="{{ path('reserva_index') }}"><button class="btn btn-primary" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+                                {% if is_granted("ROLE_ADMIN")  %}
+                                <a href="{{ path('reserva_edit', {'id': reserva.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">EDITAR</button></a>
+
+                                {{ include('reserva/_delete_form.html.twig') }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {% include 'flashback.html.twig' %}
+    <h3>Cambiar contraseña</h3>
+
+    {{ include('user/_form.html.twig') }}
+
+   
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $(function () {
+            //crud.js
+            cs.hideFlashback();
+            cs.showRequired();
+
+        });
+    </script>
+
+{% endblock %}

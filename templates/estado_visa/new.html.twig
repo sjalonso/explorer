@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1>Create new EstadoVisa</h1>
+
+    {{ include('estado_visa/_form.html.twig') }}
+
+    <a href="{{ path('estado_visa_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

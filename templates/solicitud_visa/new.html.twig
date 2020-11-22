@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+   
+{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_SUCURSAL")  %}
+    {{ include('solicitud_visa/_form.html.twig') }}
+{% elseif is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL") %}  
+  {{ include('solicitud_visa/_form.html.twig') }}
+{% endif %}
+    <a href="{{ path('solicitud_visa_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

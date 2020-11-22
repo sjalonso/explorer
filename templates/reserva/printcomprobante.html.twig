@@ -1,0 +1,323 @@
+<style>
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #customers tr:hover {background-color: #ddd;}
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+
+<h1 align="center">Factura</h1>
+
+<h3 >Datos del Cliente</h3>
+<table id="customers">
+
+    <tr>
+        <td>Nombre(s) Apellidos</td>
+        <td>Pasaporte</td>
+        <td>Paquete</td>
+
+    </tr>
+    <tr>
+        <td>{{ reserva.Cliente.titulo }}: {{ reserva.Cliente.nombre }}  {{ reserva.Cliente.apellido }}</td>
+        <td>{{ reserva.Cliente.pasaporte }}</td>
+        <td>{{ reserva.paquete.codigopaquete }}</td>
+
+    </tr>
+</table>
+
+<h3 >Datos de Viaje</h3>
+
+<table id="customers">
+
+    <tr>
+        <td>Fecha de Ida</td>
+        <td>Fecha de Regreso</td>
+        <td>Ruta</td>
+
+    </tr>
+    <tr>
+        <td>   {{ reserva.paquete.fechaida |date('Y-m-d') }} </td>
+        <td> {{ reserva.paquete.fecharegreso |date('Y-m-d') }} </td>
+        <td>{{ reserva.paquete.Ruta }}</td>
+
+    </tr>
+
+
+</table>
+
+<h3 >Pago</h3>
+<table id="customers">
+{% if  reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Simple" %}
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+    <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciodestino }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td>{{ reserva.paquete.preciototaladulto }} </td>
+    </tr>
+{% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Doble" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciodestinodoble }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultodoble }}</td>
+    </tr>
+{% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Triple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio  Destino</td>
+        <td> {{ reserva.paquete.preciodestinotriple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultotriple }}</td>
+    </tr>
+  {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Cuádruple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciodestino }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciodestinocuadruple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultocuadruple }}</td>
+    </tr>
+ {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Simple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciominisimple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultominisimple }}</td>
+    </tr>
+       {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Doble" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciominidoble }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultominidoble }}</td>
+    </tr>
+     {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Triple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciominitriple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultominitriple }}</td>
+    </tr>
+      {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciominicuadruple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td>  {{ reserva.paquete.preciototaladultominicuadruple }}</td>
+    </tr>  
+
+     
+
+     {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Simple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciomininvsimple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultomininvsimple }}</td>
+    </tr>
+       {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Doble" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciomininvdoble }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultomininvdoble }}</td>
+    </tr>
+     {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Triple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciomininvtriple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototaladultomininvtriple }}</td>
+    </tr>
+      {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.preciocuba }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciomininvcuadruple }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td>  {{ reserva.paquete.preciototaladultomininvcuadruple }}</td>
+    </tr>  
+
+      {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Paquete Normal"  %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.precioinfante }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.precioinfantedestino }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototalinfante }}</td>
+    </tr> 
+     {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete con visa"  %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.precioinfante }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciominininno }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototalinfantemini }}</td>
+    </tr> 
+
+    
+      {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete sin visa"  %}
+     
+    <tr>
+        <td>Precio Cuba</td>
+        <td> {{ reserva.paquete.precioinfante }}</td>
+    </tr>
+     <tr>
+        <td>Precio Destino</td>
+        <td> {{ reserva.paquete.preciomininvinfante }}</td>
+    </tr>
+     <tr>
+        <td>Total a Pagar</td>
+        <td> {{ reserva.paquete.preciototalinfantemininv }}</td>
+    </tr> 
+                
+{% endif %}
+   
+</table>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<table id="customers">
+
+    <tr>
+        <td>Nombre Y Apellidos Comercial</td>
+        <td> Firma </td>
+    </tr>
+    <tr>
+        <td><br></td>
+        <td> </td>
+    </tr>
+
+</table>
+<br>
+<br>
+<br>
+
+<table id="customers">
+
+    <tr>
+        <td>Nombre Y Apellidos Cliente</td>
+        <td> Firma </td>
+    </tr>
+    <tr>
+        <td><br></td>
+        <td> </td>
+    </tr>
+
+    <br>
+
+</table>

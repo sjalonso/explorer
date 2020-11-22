@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <section class="content">
+        
+        <div class="row">
+            {{ include('estadocivil/_form.html.twig', {'button_label': 'ACTUALIZAR'}) }}
+
+            <a href="{{ path('estadocivil_index') }}"><button class="btn btn-success" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+            <p>
+            {{ include('estadocivil/_delete_form.html.twig') }}
+
+        </div>
+    </section>
+{% endblock %}
+

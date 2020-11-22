@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('user_deshabilitar', {'id': user.id}) }}" onsubmit="return confirm('¿Seguro que desea cambiar el estado de este usuario?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('deshabilitar' ~ user.id) }}">
+    {% if user.activo %}
+        <button class="btn btn-warning" style="margin: 0px 5px">DESHABILITAR</button>
+    {% else %}
+        <button class="btn btn-warning" style="margin: 0px 5px">HABILITAR</button>
+    {% endif %}
+</form>

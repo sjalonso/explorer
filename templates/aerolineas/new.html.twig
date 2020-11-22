@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    
+
+    {{ include('aerolineas/_form.html.twig') }}
+
+    <a href="{{ path('aerolineas_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

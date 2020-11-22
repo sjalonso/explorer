@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listas Sucursales</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+            <tr>
+            
+
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sucursal in sucursals %}
+            <tr>
+                <td>{{ sucursal.nombre }}</td>
+                <td>
+                    <a href="{{ path('sucursal_show', {'id': sucursal.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    {% if is_granted("ROLE_ADMIN" )%}
+                    <a href="{{ path('sucursal_edit', {'id': sucursal.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                     {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if is_granted("ROLE_ADMIN" )%}
+        <a href="{{ path('sucursal_new') }}"><button class="btn btn-primary">CREAR NUEVA SUCURSAL</button></a>
+         {% endif %}
+    </section>
+    {% endblock %}

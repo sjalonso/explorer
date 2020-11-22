@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+  
+
+    {{ include('titulo/_form.html.twig') }}
+
+   <a href="{{ path('titulo_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

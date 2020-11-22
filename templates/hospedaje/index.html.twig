@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1>Hospedaje index</h1>
+
+    <table class="table" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hospedaje in hospedajes %}
+            <tr>
+                <td>{{ hospedaje.id }}</td>
+                <td>{{ hospedaje.tipo }}</td>
+                <td>
+                    <a href="{{ path('hospedaje_show', {'id': hospedaje.id}) }}">show</a>
+                    <a href="{{ path('hospedaje_edit', {'id': hospedaje.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('hospedaje_new') }}">Create new</a>
+{% endblock %}

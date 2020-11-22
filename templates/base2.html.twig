@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="autor" content="agenciapp">
+    <meta name="version" content="1.0 Beta">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    {% if meta_redirect is defined %}
+        <meta http-equiv="refresh" content="{{ meta_redirect.content }}; ,URL={{ meta_redirect.url }}">
+    {% endif %}
+    <link href="{{ asset('assets-conf/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('assets-conf/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    {% block stylesheet %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% block script %}{% endblock %}
+</body>
+
+</html>

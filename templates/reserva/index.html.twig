@@ -1,0 +1,558 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+   <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Reservas</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+                    <table>
+                    <tr>
+                        <td>Ida:<span class="input-group-text"><i class="fa fa-calendar"></i></span> </td>
+                        <td>
+                            <div class="input-daterange input-group" id="inicio_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="iniciofechaini" value="{{ fechaida }}" name="iniciofechaini" size="10" class="form-control kt-input " />
+                                        </td>
+                                        <!--
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        -->
+                                        <td style="display: none">
+                                            <input type="text" id="iniciofechafin" value="{{ fechaida }}" name="iniciofechafin" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>Regreso:<span class="input-group-text"><i class="fa fa-calendar"></i></span> </td>
+                        <td>
+                            <div class="input-daterange input-group" id="fin_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="finfechaini" value="{{ fecharegreso }}" name="finfechaini" size="10" class="form-control kt-input " />
+                                        </td>
+                                         <!--
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                          -->
+                                        <td style="display: none">
+                                            <input type="text" id="finfechafin" name="finfechafin" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>Ruta: </td>
+                        <td>
+                            <select name="ruta" id="ruta" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                {% for ruta in rutas %}
+                                    <option {% if ruta.nombreruta == ruta_reserva %} selected {% endif %} value='{{ ruta.nombreruta }}'>{{ ruta.nombreruta }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>Estado: </td>
+                        <td>
+                            <select name="estado" id="estado" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                {% for estado in estados %}
+                                    <option {% if estado.tipoestado == estado_reserva %} selected {% endif %} value='{{ estado.tipoestado }}'>{{ estado.tipoestado }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>Est. receptor: </td>
+                        <td>
+                            <select name="estado_receptor" id="estado_receptor" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                <option {% if estado_receptor_reserva == 'No Asignado' %} selected {% endif %} value='No Asignado'>No Asignado</option>
+                                <option {% if estado_receptor_reserva == 'No Show' %} selected {% endif %} value='No Show'>No Show</option>
+                                <option {% if estado_receptor_reserva == 'No Pago' %} selected {% endif %} value='No Pago'>No Pago</option>
+                                <option {% if estado_receptor_reserva == 'Pagado' %} selected {% endif %} value='Pagado'>Pagado</option>
+                            </select>
+                        </td>
+                        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                            <td>&nbsp;</td>
+                            <td>Sucursal: </td>
+                            <td>
+                                <select name="sucursal" id="sucursal" class="form-control kt-select2">
+                                    <option value="Seleccione" selected>Seleccione</option>
+                                    {% for suc in sucursales %}
+                                        <option {% if suc.nombre == sucursal_reserva %} selected {% endif %} value='{{ suc.nombre }}'>{{ suc.nombre }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <br>
+
+        <table id="example1" class="table table-bordered table-striped" width="100%">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Pasaporte</th>
+                <th>Fecha de Ida</th>
+                <th>Fecha de Regreso </th>
+                <th>Estado</th>
+                <th>Ruta</th>
+                {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") %}
+                    <th>Estado Receptor</th>
+                    <th>Sucursal</th>
+                {% endif %}
+                 {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")or is_granted("ROLE_SUCURSAL") %}
+                    <th>Ingreso</th>
+                {% endif %}
+                 {% if is_granted("ROLE_SUCURSAL")  or is_granted("ROLE_SUPERADMIN") %}
+                    <th>Usuario</th>
+                {% endif %}
+                <th>acciones</th>
+                {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_ADMIN") %}
+                    <th>Estado Receptor</th>
+                {% endif %}
+            </tr>
+         </thead>
+                    <tbody>
+                     {% set contador = 1 %}
+        {% for reserva in reservas %}
+            <tr>
+                {% if  reserva.EstadoReserva   == "Listo"  %}
+                    <td class="text-success bg-success">{{ reserva.Cliente.nombre }} {{ reserva.Cliente.apellido }}</td>
+                    <td class="text-success bg-success">{{ reserva.Cliente.pasaporte }}</td>
+                    <td class="text-success bg-success">{{ reserva.paquete.fechaida ? reserva.paquete.fechaida|date('Y-m-d') : '' }}</td>
+                    <td class="text-success bg-success">{{ reserva.paquete.fecharegreso ? reserva.paquete.fecharegreso|date('Y-m-d') : '' }}</td>
+                    <td class="text-success bg-success">{{ reserva.EstadoReserva }}</td>
+                    <td class="text-success bg-success">{{ reserva.paquete.Ruta }}</td>
+                    {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") %}
+                        <td class="text-success bg-success">{{ reserva.estadoreceptor }}</td>
+                        <td class="text-success bg-success">{{ reserva.Cliente.sucursal }}</td>
+                    {% endif %}
+
+                    {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL") %}
+                        {% if  reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Simple"  %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladulto }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Doble"  %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultodoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultotriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Cuádruple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultocuadruple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Simple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultominisimple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Doble" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultominidoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultominitriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                             <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultominicuadruple }}</td>
+                         {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Simple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultomininvsimple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Doble" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultomininvdoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultomininvtriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                             <td class="text-success bg-success">{{ reserva.paquete.Preciototaladultomininvcuadruple }}</td>    
+                        {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Paquete Normal" %} 
+                            <td class="text-success bg-success">{{ reserva.paquete.Preciototalinfante }}</td>
+                        {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete con visa" %}     
+                        <td class="text-success bg-success">{{ reserva.paquete.Preciototalinfantemini }}</td>
+                         {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete sin visa"  %}     
+                        <td class="text-success bg-success">{{ reserva.paquete.Preciototalinfantemininv }}</td>
+                         {% endif %}   
+                    {% endif %}
+
+                    {% if is_granted("ROLE_SUCURSAL")  or is_granted("ROLE_SUPERADMIN") %}
+                        <td class="text-success bg-success">{{ reserva.user }}</td>
+                    {% endif %}
+                    
+
+                {% else %}
+                    <td class="text-danger bg-danger">{{ reserva.Cliente.nombre }} {{ reserva.Cliente.apellido }}</td>
+                    <td class="text-danger bg-danger">{{ reserva.Cliente.pasaporte }}</td>
+                    <td class="text-danger bg-danger">{{ reserva.paquete.fechaida ? reserva.paquete.fechaida|date('Y-m-d') : '' }}</td>
+                    <td class="text-danger bg-danger">{{ reserva.paquete.fecharegreso ? reserva.paquete.fecharegreso|date('Y-m-d') : '' }}</td>
+                    <td class="text-danger bg-danger">{{ reserva.EstadoReserva }}</td>
+                    <td class="text-danger bg-danger">{{ reserva.paquete.Ruta }}</td>
+                    {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") %}
+                        <td class="text-danger bg-danger">{{ reserva.estadoreceptor }}</td>
+                        <td class="text-danger bg-danger">{{ reserva.Cliente.sucursal }}</td>
+                    {% endif %}
+
+                   {% if is_granted("ROLE_RECEPTOR" ) or is_granted("ROLE_SUPERADMIN") or is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL") %}
+                     {% if  reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Simple"  %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladulto }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Doble"  %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultodoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultotriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Paquete Normal" and reserva.hospedaje == "Habitación Cuádruple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultocuadruple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Simple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultominisimple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Doble" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultominidoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultominitriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete con visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                             <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultominicuadruple }}</td>
+                         {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Simple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultomininvsimple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Doble" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultomininvdoble }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Triple" %}
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultomininvtriple }}</td>
+                        {% elseif reserva.infante  == "0" and reserva.tipopaquete == "Mini paquete sin visa" and reserva.hospedaje == "Habitación Cuádruple" %}
+                             <td class="text-danger bg-danger">{{ reserva.paquete.Preciototaladultomininvcuadruple }}</td>    
+                        {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Paquete Normal" %} 
+                            <td class="text-danger bg-danger">{{ reserva.paquete.Preciototalinfante }}</td>
+                        {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete con visa" %}     
+                        <td class="text-danger bg-danger">{{ reserva.paquete.Preciototalinfantemini }}</td>
+                         {% elseif reserva.infante  == "1" and reserva.tipopaquete == "Mini paquete sin visa"  %}     
+                        <td class="text-danger bg-danger">{{ reserva.paquete.Preciototalinfantemininv }}</td>
+                         {% endif %}  
+                    {% endif %}
+
+                    {% if is_granted("ROLE_SUCURSAL")  or is_granted("ROLE_SUPERADMIN") %}
+                        <td class="text-success bg-danger">{{ reserva.user }}</td>
+                    {% endif %}
+                {% endif %}
+                
+                <td>
+                    <a href="{{ path('reserva_show', {'id': reserva.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") %}
+                        <a href="{{ path('reserva_edit', {'id': reserva.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                    {% elseif is_granted("ROLE_USER")  %}
+                    <a href="{{ path('reserva_edit2', {'id': reserva.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                   {% endif %}
+                </td>
+                 {% if is_granted("ROLE_RECEPTOR") or is_granted("ROLE_ADMIN") %}
+                    <td>
+
+                       <form action=" {{ path('reserva_receptor_estado', {'id': reserva.id}) }} "  method="post">
+                            <select id="estado" name="estado" onchange="this.form.submit()">
+                                <option {% if reserva.Estadoreceptor == 'No Asignado' %} selected {% endif %} value="No Asignado">No Asignado</option>
+                                <option {% if reserva.Estadoreceptor == 'No Show' %} selected {% endif %} value="No Show">No Show</option>
+                                <option {% if reserva.Estadoreceptor == 'No Pago' %} selected {% endif %} value="No Pago">No Pago</option>
+                                <option {% if reserva.Estadoreceptor == 'Pagado' %} selected {% endif %} value="Pagado">Pagado</option>
+
+                             </select>
+                        </form>
+                    </td>
+                 {% endif %}
+                
+            </tr>
+        {% else %}
+                        <tr>
+                            <td colspan="3">No se encontraron registros</td>
+                            {% set contador = contador + 1 %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var resultado = true;
+                var inicio_min  = $('#iniciofechaini').val();
+                var inicio_max  = $('#iniciofechafin').val();
+                var fin_min  = $('#finfechaini').val();
+                var fin_max  = $('#finfechafin').val();
+                var ruta  = $('#ruta').val();
+                var estado  = $('#estado').val();
+                var estado_receptor  = $('#estado_receptor').val();
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                    var sucursal  = $('#sucursal').val();
+                    var bool_sucursal = false;
+                    var sucursalCol = aData[7];
+                {% endif %}
+                var inicioTramite = aData[2];
+                var finTramite = aData[3];
+                var rutaCol = aData[5];
+                var estadoCol = aData[4];
+                var estado_receptorCol = aData[6];
+                var bool_inicio_min = false;
+                var bool_inicio_max = false;
+                var bool_fin_min = false;
+                var bool_fin_max = false;
+                var bool_ruta = false;
+                var bool_estado = false;
+                var bool_estado_receptor = false;
+
+                var fechaInicioTramite = "";
+                var fechaFinTramite = "";
+
+                if(inicioTramite != "") {
+                    fechaTramite = Date.parse(inicioTramite);
+                    fechaInicioTramite = new Date(fechaTramite);
+                }
+                if(finTramite != "") {
+                    fechaTramite = Date.parse(finTramite);
+                    fechaFinTramite = new Date(fechaTramite);
+                }
+
+                if (inicio_min != "" && inicio_max == "") {
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial)
+                        bool_inicio_min = true;
+                    else bool_inicio_min = false;
+                }
+                else if(inicio_max != "" && inicio_min == "") {
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite <= fechaFinal)
+                        bool_inicio_max = true;
+                    else bool_inicio_max = false;
+                }
+                else if(inicio_max != "" && inicio_min != ""){
+                    fechaMin = Date.parse(inicio_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(inicio_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial && fechaInicioTramite <= fechaFinal) {
+                        bool_inicio_min = true;
+                        bool_inicio_max = true;
+                    }
+                    else {
+                        bool_inicio_min = false;
+                        bool_inicio_max = false;
+                    }
+                }
+
+                if (fin_min != "" && fin_max == "") {
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial)
+                        bool_fin_min = true;
+                    else bool_fin_min = false;
+                }
+                else if(fin_max != "" && fin_min == "") {
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite <= fechaFinal)
+                        bool_fin_max = true;
+                    else bool_fin_max = false;
+                }
+                else if(fin_max != "" && fin_min != ""){
+                    fechaMin = Date.parse(fin_min);
+                    fechaInicial = new Date(fechaMin);
+
+                    fechaMax = Date.parse(fin_max);
+                    fechaFinal = new Date(fechaMax);
+
+                    if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial && fechaFinTramite <= fechaFinal) {
+                        bool_fin_min = true;
+                        bool_fin_max = true;
+                    }
+                    else {
+                        bool_fin_min = false;
+                        bool_fin_max = false;
+                    }
+                }
+
+                if(ruta != "Seleccione"){
+                    if(ruta == rutaCol)
+                        bool_ruta = true;
+                    else bool_ruta = false;
+                }
+
+                if(estado != "Seleccione"){
+                    if(estado == estadoCol)
+                        bool_estado = true;
+                    else bool_estado = false;
+                }
+
+                if(estado_receptor != "Seleccione"){
+                    if(estado_receptor == estado_receptorCol)
+                        bool_estado_receptor = true;
+                    else bool_estado_receptor = false;
+                }
+
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                    if(sucursal != "Seleccione"){
+                        if(sucursal == sucursalCol)
+                            bool_sucursal = true;
+                        else bool_sucursal = false;
+                    }
+                {% endif %}
+
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                    if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                        || fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max || ruta != "Seleccione" && !bool_ruta
+                        || estado != "Seleccione" && !bool_estado || sucursal != "Seleccione" && !bool_sucursal
+                        || estado_receptor != "Seleccione" && !bool_estado_receptor
+                    )
+                        resultado = false;
+                {% else %}
+                if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                        || fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max || ruta != "Seleccione" && !bool_ruta
+                        || estado != "Seleccione" && !bool_estado || estado_receptor != "Seleccione" && !bool_estado_receptor
+                )
+                    resultado = false;
+                {% endif %}
+                return resultado;
+            }
+        );
+
+        $(document).ready(function() {
+
+            var table = $('#example1').DataTable();
+
+            $('#iniciofechaini').change( function() {
+                ini = $('#iniciofechaini').val()
+                $('#iniciofechafin').val(ini);
+            } );
+
+            $('#finfechaini').change( function() {
+                fin = $('#finfechaini').val()
+                $('#finfechafin').val(fin);
+            } );
+
+            $('.input-daterange').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                        'estado': $('#estado').val(),
+                        'estado_receptor': $('#estado_receptor').val(),
+                        'sucursal': $('#sucursal').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+
+            } );
+
+            $('#ruta').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                        'estado': $('#estado').val(),
+                        'estado_receptor': $('#estado_receptor').val(),
+                        'sucursal': $('#sucursal').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+
+            $('#estado').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                        'estado': $('#estado').val(),
+                        'estado_receptor': $('#estado_receptor').val(),
+                        'sucursal': $('#sucursal').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+
+            $('#estado_receptor').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltroreserva') }}",
+                    data: {
+                        'fechaida': $('#iniciofechaini').val(),
+                        'fecharegreso': $('#finfechaini').val(),
+                        'ruta': $('#ruta').val(),
+                        'estado': $('#estado').val(),
+                        'estado_receptor': $('#estado_receptor').val(),
+                        'sucursal': $('#sucursal').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                $('#sucursal').change( function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ path('setearfiltroreserva') }}",
+                        data: {
+                            'fechaida': $('#iniciofechaini').val(),
+                            'fecharegreso': $('#finfechaini').val(),
+                            'ruta': $('#ruta').val(),
+                            'estado': $('#estado').val(),
+                            'estado_receptor': $('#estado_receptor').val(),
+                            'sucursal': $('#sucursal').val()
+                        }
+                    }).done(function (respuesta) {});
+                    table.draw();
+                } );
+            {% endif %}
+
+        });
+
+        $('#inicio_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+        $('#fin_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+    
+
+//
+    </script>
+
+{% endblock %}
+   

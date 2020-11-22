@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+  
+
+    {{ include('estado_reserva/_form.html.twig') }}
+
+    <a href="{{ path('estado_reserva_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

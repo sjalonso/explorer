@@ -1,0 +1,131 @@
+
+<style>
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #customers tr:hover {background-color: #ddd;}
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+
+
+<h1 align="center">Datos de Paquete</h1>
+
+<h3 >Datos del Paquete</h3>
+<table id="customers">
+
+    <tr>
+        <td>Codigo del Paquete</td>
+        <td>Fecha de Ida</td>
+        <td>Fecha de regreso</td>
+        <td>Aerolinea</td>
+
+    </tr>
+    <tr>
+        <td> {{ paquete.codigopaquete }} </td>
+        <td>{{ paquete.fechaida |date('Y-m-d') }}</td>
+        <td>{{ paquete.fecharegreso |date('Y-m-d') }}</td>
+        <td> {{ paquete.aerolineas }} </td>
+    </tr>
+    <p>
+</table>
+<p class="strong">Precios Cuba</p>
+  <table id="customers"> 
+
+      <tr>
+        <td>Precio en Cuba Adultos</td>
+        <td>Precio Infante Cuba</td>
+      </tr>
+    <tr>
+        <td> {{ paquete.preciocuba }} </td>
+       <td>{{ paquete.precioinfante }}</td>
+        
+    </tr>
+</table>
+
+<p class="strong">Precios Paquete Normal</p>
+  <table id="customers"> 
+
+      <tr>
+        <td>Precio Habitación Simple</td>
+        <td>Precio Habitación Doble</td>
+        <td>Precio Habitación Triple</td>
+        <td>Precio Habitación Cuádruple</td>
+        <td>Precio Infante</td>
+
+
+    </tr>
+    <tr>
+        <td> {{ paquete.preciodestino }} </td>
+        <td>{{ paquete.preciodestinodoble }}</td>
+        <td>{{ paquete.preciodestinotriple }}</td>
+        <td>{{ paquete.preciodestinocuadruple }}</td>
+        <td>{{ paquete.precioinfantedestino }}</td>
+    </tr>
+</table>
+
+<p class="strong">Precios Paquete Mini</p>
+  <table id="customers"> 
+
+      <tr>
+        <td>Precio Habitación Simple</td>
+        <td>Precio Habitación Doble</td>
+        <td>Precio Habitación Triple</td>
+        <td>Precio Habitación Cuádruple</td>
+        <td>Precio Infante</td>
+
+
+    </tr>
+    <tr>
+        <td> {{ paquete.preciominisimple }} </td>
+        <td>{{ paquete.preciominidoble }}</td>
+        <td>{{ paquete.preciominitriple }}</td>
+        <td>{{ paquete.preciominicuadruple }}</td>
+        <td>{{ paquete.preciominininno }}</td>
+    </tr>
+</table>
+
+
+</table>
+
+<h3 >Listado de Clientes</h3>
+<table id="customers"">
+    <thead>
+        <tr>             
+            <th>Cliente</th>
+            <th>Pasaporte</th>
+            <th>Hospedaje</th>   
+        </tr>
+    </thead>
+    <tbody>
+    {% for res in reservas %}
+        <tr>   
+            <td>{{ res.Cliente.nombre  }} {{ res.Cliente.apellido  }}  </td>
+            <td>{{ res.Cliente.Pasaporte  }}   </td>
+            <td>{{ res.Hospedaje  }}   </td>
+        </tr>
+        {% else %}
+            <td colspan="3">No se encontraron registros</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+         
+
+

@@ -1,0 +1,242 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Solicitud de Visa</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body">
+                             <div class="row">
+                                    <div class="col-md-2">
+                                        Cliente
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.nombre }}  {{ solicitud_visa.Cliente.apellido }} 
+                                    </div>
+                                </div>
+
+                                
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de Nacimiento
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.fechanacimiento |date('Y-m-d')  }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Lugar de nacimiento
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.lugarnacimiento }} 
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Pasaporte
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.pasaporte }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Lugar de expedición
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.lugarexpedicion }} 
+                                    </div>
+                                </div>
+
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de Expedición
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.fechaexpedicion |date('Y-m-d')  }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de Expiración
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.fechaexpiracion |date('Y-m-d')  }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Estado civil
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Estadocivil  }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                       
+                                        Sexo
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.sexo  }} 
+                                    </div>
+                                </div>
+
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Dirección (extranjero)
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.direccionextranjero  }} 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                         pais (extranjero)
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.pais  }} 
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Nacionalidad
+                                    </div>
+                                    <div class="col-md-10">
+                                       {{ solicitud_visa.Cliente.nacionalidad }}
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Teléfono
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.telefono  }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Correo
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.Cliente.correo  }} 
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Ocupación
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.ocupacion  }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-2">
+                                        Lugar de Trabajo
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.lugartrabajo  }} 
+                                    </div>
+                                </div>
+
+                                      <div class="row">
+                                    <div class="col-md-2">
+                                        Viaje Haiti
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.viajehaiti ? 'Sí' : 'No' }} 
+                                    </div>
+                                </div>
+
+                          <div class="row">
+                                    <div class="col-md-2">
+                                       Motivo de viaje
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.motivo }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Fecha de regreso
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.fecharegreso |date('Y-m-d')  }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Duración Estancia (Días)
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.duracionestancia }} 
+                                    </div>
+                                </div>
+
+                                   <div class="row">
+                                    <div class="col-md-2">
+                                        Dirección Haiti
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.direccionhaiti }} 
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                        Estado solicitud de visa
+                                    </div>
+                                    <div class="col-md-10">
+                                        {{ solicitud_visa.EstadoSolicitudvisa }} 
+                                    </div>
+                                </div>
+                                
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body" style="display: flex">
+                                <a href="{{ path('solicitud_visa_index') }}"><button class="btn btn-primary" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+                                 {% if is_granted("ROLE_ADMIN")  %}
+                                <a href="{{ path('solicitud_visa_edit2', {'id': solicitud_visa.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">EDITAR</button></a>
+                                {% endif %}
+                                {% if is_granted("ROLE_VISADO")  %}
+                                <a href="{{ path('solicitud_visa_edit', {'id': solicitud_visa.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">EDITAR</button></a>
+                                {% endif %}
+                                {% if is_granted("ROLE_ADMIN")  %}
+                                {{ include('solicitud_visa/_delete_form.html.twig') }}
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

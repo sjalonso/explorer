@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+    {{ include('dia_vuelta/_form.html.twig') }}
+
+    <a href="{{ path('dia_vuelta_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}

@@ -1,0 +1,371 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Paquete</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body">
+                                 <div class="row">
+                                    <div class="col-md-3">
+                                        Código del Paquete
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.codigopaquete }} 
+                                    </div>
+                                </div>
+                                  <div class="row">
+                                    <div class="col-md-3">
+                                        Aerolineas
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.aerolineas }} 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Nombre ruta
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.Ruta }} 
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                    <div class="col-md-3">
+                                        Fecha de ida
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.fechaida |date('Y-m-d') }} 
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Fecha de regreso
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.fecharegreso |date('Y-m-d') }} 
+                                    </div>
+                                </div>
+                                 
+                                 <div class="row">
+                                    <div class="col-md-3">
+                                        Cantidad de asientos
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.cantasiento  }} 
+                                    </div>
+                                </div>
+                                       <div class="row">
+                                    <div class="col-md-3">
+                                        Descripción
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.descripcion  }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Estado del Paquete
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.EstadoPaquete  }} 
+                                    </div>
+
+
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-3">
+                                        Fecha limite
+                                    </div>
+                                    <div class="col-md-9">
+                                        {{ paquete.fechalimite |date('Y-m-d') }} 
+                                    </div>
+
+
+                                </div>
+
+<div class="row">
+<div class="alert alert-success col-md-4 ">
+<strong>Precios Cuba</strong>
+<div class="row">
+                            <div class="row">
+                                    <div class="col-md-6">
+                                        Precio infante Cuba
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.precioinfante  }} 
+                                    </div>
+                                </div>
+                                   <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Cuba
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciocuba  }} 
+                                    </div>
+                                </div>
+                                
+                                
+</div>
+</div>
+</div>
+                               
+                                
+                           
+  <div class="row ">                                
+<div class="alert alert-success col-md-4 ">
+<strong>Precios Destino de paquete normal</strong>
+ <div class="row">
+
+                             <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Simple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciodestino  }} 
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                        Precio  Doble
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciodestinodoble  }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio triple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciodestinotriple  }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Cuádruple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciodestinocuadruple  }} 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Precio infante 
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.precioinfantedestino  }}
+                                    </div>
+                                </div>
+</div>
+</div>
+
+
+<div class="alert alert-success col-md-4 ">
+<strong>Precios Destino de paquete Mini con visa</strong>
+ <div class="row">
+
+                             <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Simple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciominisimple  }} 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Precio  Doble
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciominidoble  }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio triple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciominitriple  }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Cuádruple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciominicuadruple  }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Infante 
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciominininno }} 
+                                    </div>
+                                 </div>
+</div>
+</div>
+
+<div class="alert alert-success col-md-4 ">
+<strong>Precios Destino de paquete Mini sin visa</strong>
+ <div class="row">
+
+                             <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Simple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciomininvsimple  }} 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Precio  Doble
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciomininvdoble  }} 
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio triple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciomininvtriple }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Cuádruple
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciomininvcuadruple  }} 
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        Precio Infante 
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ paquete.preciomininvinfante }} 
+                                    </div>
+                                 </div>
+</div>
+</div>
+
+
+</div>
+
+                             
+                                </div>
+                             
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Reservas</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+            <tr>
+            <tr>
+                <th>Fecha de Creación</th>
+                <th>Cliente</th>
+                <th>Pasaporte</th>
+                <th>Infante</th>
+                <th>Tipo de Paquete</th>
+                <th>Estado de Reserva</th>
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                <th>Sucursal</th>
+                <th>Estado de Receptor</th>
+                 {% endif %}
+                <th>factura</th>
+                <!--
+                <th>Estado Receptor</th>
+                -->
+            </tr>
+        </thead>
+        <tbody>
+         {% for res in reservas %}
+            <tr>
+                <td>{{ res.fechacreacion |date('Y-m-d') }} </td>
+                <td>{{ res.Cliente.nombre  }} {{ res.Cliente.apellido  }}  </td>
+                <td>{{ res.Cliente.Pasaporte  }}   </td>
+                <td> {{ res.infante ? 'Sí' : 'No' }}     </td>
+                <td>{{ res.tipopaquete  }}   </td>
+                <td>{{ res.Estadoreserva  }}   </td>
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                <td>{{ res.Cliente.sucursal  }}   </td>
+                <td>{{ res.estadoreceptor  }}   </td>
+                {% endif %}
+               <td> <a href="{{ path('imprimefactura_show', {'id': res.id}) }}"><button class="btn fa fa-print"></button></a></td>
+                   <!--
+                   <td>
+                  <form action=" {{ path('reserva_receptor_estado2', {'id': res.id}) }} "  method="post">
+                        <select id="estado" name="estado" onchange="this.form.submit()">
+                            <option {% if res.Estadoreceptor == 'No Show' %} selected {% endif %} value="no Show">No Show</option>
+                            <option {% if res.Estadoreceptor == 'No Pago' %} selected {% endif %} value="no Pago">No Pago</option>
+                            <option {% if res.Estadoreceptor == 'Pagado' %} selected {% endif %} value="Pagado">Pagado</option>
+                         </select>
+                    </form>
+                </td>
+                    -->
+            </tr>
+        {% else %}
+           <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-body" style="display: flex">
+                                <a href="{{ path('paquete_index') }}"><button class="btn btn-primary" style="margin: 0px 5px">VOLVER AL LISTADO</button></a>
+                                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_RECEPTOR") or is_granted("ROLE_SUPERADMIN") %}
+                                    <a href="{{ path('exportar_listado_visado', {'id': paquete.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">REPORTE AEROPUERTO</button></a>
+                                    <a href="{{ path('exportar_rooming_list', {'id': paquete.id}) }}"><button class="btn  btn-success" style="margin: 0px 5px">REPORTE HOTEL</button></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </section>
+
+
+
+     
+      
+    
+
+{% endblock %}

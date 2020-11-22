@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('user_resetear', {'id': user.id}) }}" onsubmit="return confirm('¿Seguro que desea resetear este usuario?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('resetear' ~ user.id) }}">
+    <button class="btn btn-info" style="margin: 0px 5px">RESETEAR</button>
+</form>

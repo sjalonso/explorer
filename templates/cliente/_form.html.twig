@@ -1,0 +1,180 @@
+{% block body %}
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Gestionar Cliente</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                  
+                    {#Fila1#}
+                    <div class="row">
+                      <div class="col-md-1">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.titulo) }}</div>
+                            <div class="form-group">
+                                Título
+                            {#{{ form_label(form.nombre, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.titulo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.nombre) }}</div>
+                            <div class="form-group">
+                                Nombre
+                            {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.apellido) }}</div>
+                            <div class="form-group">
+                                Apellidos
+                                {#{{ form_label(form.apellido, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.apellido, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.lugarnacimiento) }}</div>
+                            <div class="form-group">
+                                Lugar nacimiento
+                                {#{{ form_label(form.lugarnacimiento, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.lugarnacimiento, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {#Fin fila 1#}
+
+                       {#Fila2#}
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.fechanacimiento) }}</div>
+                            <div class="form-group">
+                                Fecha nacimiento (YYYY-MM-DD)
+                                {#{{ form_label(form.fechanacimiento, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechanacimiento) }}
+                            </div>
+                        </div>
+
+                          <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.sexo) }}</div>
+                            <div class="form-group">
+                               Sexo
+                            {#{{ form_label(form.sexo, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.sexo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.pasaporte) }}</div>
+                            <div class="form-group">
+                                Pasaporte
+                            {#{{ form_label(form.pasaporte, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {{ form_widget(form.pasaporte, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.fechaexpiracion) }}</div>
+                            <div class="form-group">
+                                Fecha expiración (pasaporte)(MM-DD-YYYY)
+                                {#{{ form_label(form.fechaexpiracion, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechaexpiracion, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+                 
+
+                    </div>
+                    {#Fin fila 2#}
+
+                       {#Fila3#}
+                    <div class="row">
+
+                      <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.fechaexpedicion) }}</div>
+                            <div class="form-group">
+                                Fecha expedición (pasaporte)(MM-DD-YYYY)
+                                {#{{ form_label(form.fechaexpedicion, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.fechaexpedicion, { attr:{ class:'js-datepicker' } }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.lugarexpedicion) }}</div>
+                            <div class="form-group">
+                                Lugar expedición
+                                {#{{ form_label(form.lugarexpedicion, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.lugarexpedicion, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.telefono) }}</div>
+                            <div class="form-group">
+                                Teléfono
+                                {#{{ form_label(form.telefono, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.telefono, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="error" style="color: #b91a14">{{ form_errors(form.correo) }}</div>
+                            <div class="form-group">
+                                Correo
+                                {#{{ form_label(form.correo, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.correo, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                     
+                    </div>
+                    {#Fin fila 3#}
+
+                    {#iniciofila 4#}
+                    <div class="row">
+                         <div class="col-md-3">
+                             <div class="error" style="color: #b91a14">{{ form_errors(form.nacionalidad) }}</div>
+                            <div class="form-group">
+                                Nacionalidad
+                                {#{{ form_label(form.correo, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                                {{ form_widget(form.nacionalidad, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>  
+                    </div>
+                    {#Fin fila 4#}
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('ADICIONAR') }}</button>
+                        
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                todayHighlight: true,
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                templates: {
+                    leftArrow: '<i class="la la-angle-left"></i>',
+                    rightArrow: '<i class="la la-angle-right"></i>',
+                },
+            });
+        });
+
+    </script>
+{% endblock %}

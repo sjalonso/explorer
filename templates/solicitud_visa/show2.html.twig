@@ -1,0 +1,298 @@
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<head>
+<style>
+#customers {
+font-family: Arial;
+padding: 0px;
+width: 100%;
+}
+
+#customers td, #customers th {
+border: 0.5px solid ;
+
+}
+
+#customers2 {
+font-family: Arial;
+
+width: 100%;
+}
+
+#customers2 td, #customers th {
+
+
+}
+</style>
+<h3 align="center">Formulaire de demande de visa de Non Immigrant </h3>
+<h3 align="center">Planilla de Solicitud de Visa de no Imigrante </h3>
+<h3 align="center">Nom immigrant visa application </h3>
+
+<table id="customers2">
+   <tr>
+        <td>
+        <img  src="{{ asset('images/escudo.png') }} ">
+       </td>
+        <td>
+        <img  src="{{ asset('images/foto.png') }} ">
+        </td>
+         </tr>
+    </table>
+
+</head>
+
+<table id="customers">
+   
+    <tr>
+        <td>
+        <p>1.Nom/Apellidos/Family names<p>
+        <p> {{ solicitud_visa.Cliente.apellido }}</p>
+        </td>
+        <td>
+        <p>2.Prénoms/Nombres/First names<p> 
+        <p>{{ solicitud_visa.Cliente.nombre }}  </p>
+        </td>
+        
+
+    </tr>
+    </table>
+    <table id="customers">
+        <tr>
+            <td>
+                <p>3.Adresse actuelle/Dirección del Domicilio/Adress in Cuba<p>
+                <p> {{ solicitud_visa.direccioncuba }}</p>
+            </td>
+        </tr>
+    </table>
+
+<table id="customers">
+        <tr>
+            <td>
+                <p>4.Adresse Dans le pays d'origine/Dirección en el país de Origen /Home Adress  (Para extranjeros)<p>
+                <p> {{ solicitud_visa.direccionextranjero }}</p>
+            </td>
+        </tr>
+    </table>
+
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>5.Date de naissance/Fecha de Nacimiento/Date of birth<p>
+            <p> {{ solicitud_visa.Cliente.fechanacimiento |date('Y-m-d')}}</p>
+        </td>
+        <td>
+            <p>2.Lieu de naissance /Lugar de nacimiento/place of birth<p> 
+            <p>{{ solicitud_visa.Cliente.lugarnacimiento }}  </p>
+        </td>
+        
+
+    </tr>
+</table> 
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>7.Sexe/Sexo/Sex<p>
+            <p> {{ solicitud_visa.Cliente.sexo  }}</p>
+        </td>
+        <td>
+            <p>8.Etat Civil/Estado Civil/Marital status<p> 
+            <p>{{ solicitud_visa.Estadocivil  }}  </p>
+        </td>
+          <td>
+            <p>9.Nationalité/Nacionalidad/Nationality<p>
+            <p><p>{{ solicitud_visa.Cliente.nacionalidad }}<p>  </p>
+        </td>
+        <td>
+            <p>10.Pays /País/Country<p> 
+            <p>{{ solicitud_visa.pais }} </p>
+        </td>
+
+    </tr>
+</table>    
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>11.No.Passeport/No.pasaporte/Passport Number<p>
+            <p> {{ solicitud_visa.Cliente.pasaporte}}</p>
+        </td>
+        <td>
+            <p>12.Lieu de délivrance /Lugar de Expedición/Place of issuance<p> 
+            <p>{{ solicitud_visa.Cliente.lugarexpedicion}}  </p>
+        </td>
+        
+
+    </tr>
+</table> 
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>13.Date d'émission/Fecha de expedición/Date of issuance<p>
+            <p> {{ solicitud_visa.Cliente.fechaexpedicion |date('Y-m-d')}}</p>
+        </td>
+        <td>
+            <p>14.Date d'expiration/Fecha de vencimiento/Date of expiry<p> 
+            <p>{{ solicitud_visa.Cliente.fechaexpiracion |date('Y-m-d')}}  </p>
+        </td>
+        
+
+    </tr>
+</table> 
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>15.Profession/Ocupación/Ocupation<p>
+            <p> {{ solicitud_visa.ocupacion}}</p>
+        </td>
+        <td>
+            <p>16.lieu de travail/Lugar de trabajo/Place of work - ó Escuela/Universidad<p> 
+            <p><p> {{ solicitud_visa.lugartrabajo}}</p>  </p>
+        </td>
+        
+
+    </tr>
+</table> 
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>17.Etes-vous déja allé en Haití?/¿Ha ya visitado haiti?/Have you ever been in Haiti<p>
+            <p>  {{ solicitud_visa.viajehaiti ? 'Sí' : 'No' }}</p>
+        </td>
+        <td>
+            <p>18.Object de la visite/Motivo del viaje/Purpose of trip<p> 
+            <p>{{ solicitud_visa.motivo }}<p> 
+        </td>
+        
+
+    </tr>
+</table> 
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>19.Durée du séjour/Duración de la Estancia/Length of stay<p>
+            <p>{{ solicitud_visa.duracionestancia}}  </p>
+        </td>
+        <td>
+            <p>20.Date de retour á Cuba/Fecha de regreso a Cuba/Date of return in Cuba<p> 
+            <p><p> </p> {{ solicitud_visa.fecharegreso |date('Y-m-d')}} </p>
+        </td>
+        
+
+    </tr>
+</table> 
+
+<table id="customers">
+        <tr>
+            <td>
+                <p>21.Adresse oú vous serez logé en Haití/Dirección donde estará en Haití/Address where you'll be staying in Haití<p>
+                <p> {{ solicitud_visa.direccionhaiti }}</p>
+            </td>
+        </tr>
+    </table>
+
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>22.Date/Fecha<p>
+            <p> </p>
+        </td>
+        <td>
+            <p>23.Signature du demandeur/Firma del Solicitante/Applicant's signature<p> 
+            <p><p> </p> {{ solicitud_visa.fecharegreso |date('Y-m-d')}} </p>
+        </td>
+        
+
+    </tr>
+</table> 
+
+<h3 align="center">RESERVE A L'ADMINISTRATION</h3>
+<h3 align="center">NO ESCRIBA/DO NOT WRITE</h3>
+
+
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>No Visa<p>
+            <p> </p>
+        </td>
+        <td>
+            <p>Type de Visa<p> 
+            <p> </p>
+        </td>
+          <td>
+            <p>Nombre d' entrées<p>
+            <p> </p>
+        </td>
+        
+
+    </tr>
+</table>  
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>Date d' emission<p>
+            <p> </p>
+        </td>
+        <td>
+            <p>Date d' expiration<p> 
+            <p> </p>
+        </td>
+          <td>
+            <p>Taxe percue<p>
+            <p>Recu# </p>
+        </td>
+        
+
+    </tr>
+</table>  
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>Référenece Note<p>
+            <p> </p>
+        </td>
+        <td>
+            <p>Signature du Responsable<p> 
+            <p> </p>
+        </td>
+         
+        
+
+    </tr>
+</table>
+<table id="customers">
+   
+    <tr>
+        <td>
+            <p>Visa refusé<p>
+            <p> </p>
+        </td>
+        <td>
+            <p>Motif<p> 
+            <p> </p>
+        </td>
+          <td>
+            <p>Date<p>
+            <p> </p>
+        </td>
+        
+
+    </tr>
+</table> 
+
+ 
+
+{% endblock %}

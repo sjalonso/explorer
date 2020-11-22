@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listas Sexos</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+            <tr>
+            <tr>
+                <th>Nombre</th>
+                <th>acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sexo in sexos %}
+            <tr>
+                <td>{{ sexo.tiposexo }}</td>
+                <td>
+                    <a href="{{ path('sexo_show', {'id': sexo.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    <a href="{{ path('sexo_edit', {'id': sexo.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                </td>
+            </tr>
+        {% else %}
+           <td colspan="3">No se encontraron registros</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="{{ path('sexo_new') }}"><button class="btn btn-primary">CREAR NUEVO SEXO</button></a>
+    </section>
+    {% endblock %}

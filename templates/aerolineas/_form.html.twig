@@ -1,0 +1,34 @@
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Aerolineas</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-body">
+                    {{ form_start(form) }}
+                  
+                     {#Fila0#}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                            {{ form_label(form.nombre, null, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+           
+                    </div>
+                    {#Fin fila 0#}
+
+                    <div style="float: right">
+                        <button class="btn btn-primary" style="margin: 0px 5px">{{ button_label|default('ADICIONAR') }}</button>
+                       
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

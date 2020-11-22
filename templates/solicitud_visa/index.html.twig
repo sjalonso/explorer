@@ -1,0 +1,458 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Listas Solicitudes de Visa</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table>
+                    <tr>
+                        <td>Fecha de Ida: </td>
+                        <td>
+                            <div class="input-daterange input-group" id="inicio_tramite">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="iniciofechaini" value="{{ fechainicio }}" name="iniciofechaini" size="12" class="form-control kt-input "  />
+                                        </td>
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td style="display: none">
+                                            <input type="text" id="iniciofechafin" value="{{ fechainicio }}" name="iniciofechafin" size="12" class="form-control kt-input " />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>&nbsp;&nbsp;</td>
+                        {#<td>Final de  trámite: </td>#}
+                        {#<td>#}
+                            {#<div class="input-daterange input-group" id="fin_tramite">#}
+                                {#<table>#}
+                                    {#<tr>#}
+                                        {#<td>#}
+                                            {#<input type="text" id="finfechaini" name="finfechaini" size="12" class="form-control kt-input "  placeholder=""  />#}
+                                        {#</td>#}
+                                        {#<td>#}
+                                            {#<div class="input-group-append">#}
+                                                {#<span class="input-group-text"><i class="fa fa-calendar"></i></span>#}
+                                            {#</div>#}
+                                        {#</td>#}
+                                        {#<td style="display: none">#}
+                                            {#<input type="text" id="finfechafin" name="finfechafin" size="12" class="form-control kt-input " placeholder="Fin" />#}
+                                        {#</td>#}
+                                    {#</tr>#}
+                                {#</table>#}
+                            {#</div>#}
+                        {#</td>#}
+                        <td>&nbsp;&nbsp;</td>
+                        <td>Estado solicitud: </td>
+                        <td>
+                            <select name="estado" id="estado" class="form-control kt-select2">
+                                <option value="Seleccione" selected>Seleccione</option>
+                                <option {% if estado_solicitud == "Nueva" %} selected {% endif %} value="Nueva">Nueva</option>
+                                <option {% if estado_solicitud == "Procesando" %} selected {% endif %} value="Procesando">Procesando</option>
+                                <option {% if estado_solicitud == "Denegada" %} selected {% endif %} value="Denegada">Denegada</option>
+                                <option {% if estado_solicitud == "Lista" %} selected {% endif %} value="Lista">Lista</option>
+                            </select>
+                        </td>
+                        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                            <td>&nbsp;</td>
+                            <td>Sucursal: </td>
+                            <td>
+                                <select name="sucursal" id="sucursal" class="form-control kt-select2">
+                                    <option value="Seleccione" selected>Seleccione</option>
+                                    {% for suc in sucursales %}
+                                        <option value='{{ suc.nombre }}'>{{ suc.nombre }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <br>
+
+                <table id="example4" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+            <tr>
+            <tr>
+                {#<th>Id</th>#}
+                <th>Fecha de Solicitud</th>
+                <th>Nombre y Apellidos</th>
+                <th>Pasaporte</th>
+                <th>Fecha de Ida</th>
+                <th>Estado de Solicitud</th>
+               
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <th>Sucursal</th>
+                {% endif %}
+                {% if is_granted("ROLE_SUCURSAL") %}
+                    <th>Usuario</th>
+                {% endif %}
+                
+                <th width="13%">acciones</th>
+                {% if is_granted("ROLE_ADMIN") or  is_granted("ROLE_VISADO") %}
+                <th>Estado solicitud</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% set contador = 1 %}
+        {% for solicitud_visa in solicitud_visas %}
+        
+            <tr>
+            {% if  solicitud_visa.EstadoSolicitudVisa   == "Nueva"  %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-primary bg-info "> {{ solicitud_visa.fechasolicitud  ? solicitud_visa.fechasolicitud|date('Y-m-d') : ''  }}</td>
+                <td class="text-primary bg-info "> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-primary  bg-info">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                 <td class="text-primary  bg-info">{{ solicitud_visa.fechasalidaviaje ? solicitud_visa.fechasalidaviaje|date('Y-m-d') : '' }}</td>
+                <td class="text-primary  bg-info">{{ solicitud_visa.Estadosolicitudvisa }}</td>
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-primary  bg-info">{{ solicitud_visa.Cliente.sucursal }}</td>
+                  {% endif %}
+                {% if is_granted("ROLE_SUCURSAL") %}
+                    <td class="text-primary  bg-info">{{ solicitud_visa.user }}</td>
+                {% endif %}
+           {% elseif solicitud_visa.EstadoSolicitudVisa   == "Lista" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-success bg-success "> {{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : ''   }}</td>
+                <td class="text-success bg-success"> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-primary  bg-success">{{ solicitud_visa.fechasalidaviaje ? solicitud_visa.fechasalidaviaje|date('Y-m-d') : '' }}</td>
+                <td class="text-success bg-success">{{ solicitud_visa.Estadosolicitudvisa }}</td>
+               
+              {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-success  bg-success">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+               {% if is_granted("ROLE_SUCURSAL") %}
+                   <td class="text-success  bg-success">{{ solicitud_visa.user }}</td>
+               {% endif %}
+           {% elseif solicitud_visa.EstadoSolicitudVisa   == "Denegada" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-danger bg-danger "> {{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : ''  }}</td>
+                <td class="text-danger bg-danger"> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-primary  bg-danger">{{ solicitud_visa.fechasalidaviaje ? solicitud_visa.fechasalidaviaje|date('Y-m-d') : '' }}</td>
+                <td class="text-danger bg-danger">{{ solicitud_visa.Estadosolicitudvisa }}</td>
+               
+              {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-danger  bg-danger">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+                {% if is_granted("ROLE_SUCURSAL") %}
+                    <td class="text-danger  bg-danger">{{ solicitud_visa.user }}</td>
+                {% endif %}
+            {% elseif solicitud_visa.EstadoSolicitudVisa   == "Procesando" %}
+                {#<td>{{ solicitud_visa.id }}</td>#}
+                <td class="text-warning bg-warning "> {{ solicitud_visa.fechasolicitud ? solicitud_visa.fechasolicitud|date('Y-m-d') : ''   }}</td>
+                <td class="text-warning bg-warning"> {{ solicitud_visa.Cliente.nombre }} {{ solicitud_visa.Cliente.apellido }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.Cliente.pasaporte }}</td>
+                <td class="text-primary  bg-warning">{{ solicitud_visa.fechasalidaviaje ? solicitud_visa.fechasalidaviaje|date('Y-m-d') : '' }}</td>
+                <td class="text-warning bg-warning">{{ solicitud_visa.Estadosolicitudvisa }}</td>
+              
+                 {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                    <td class="text-warning  bg-warning">{{ solicitud_visa.Cliente.sucursal }}</td>
+                {% endif %}
+                {% if is_granted("ROLE_SUCURSAL") %}
+                    <td class="text-warning  bg-warning">{{ solicitud_visa.user }}</td>
+                {% endif %}
+            {% endif %}
+                <td>
+                    <a href="{{ path('solicitud_visa_show', {'id': solicitud_visa.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                   <!--  <a href="{{ path('printsolicitudvisa_show', {'id':solicitud_visa.id}) }}"><button class="fa fa-print btn-sm"></button></a> -->
+                    <a href="{{ path('solicitud_visa_show2', {'id':solicitud_visa.id}) }}"><button class="fa fa-print btn-sm"></button></a>
+                    {% if is_granted("ROLE_ADMIN")  %}
+                        <a href="{{ path('solicitud_visa_edit2', {'id': solicitud_visa.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                    {% elseif is_granted("ROLE_VISADO")  %}
+                        <a href="{{ path('solicitud_visa_edit', {'id': solicitud_visa.id}) }}"><button class="fa fa-pencil btn-sm"></button></a>
+                    {% endif %}
+                </td>
+                {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                <td>
+
+                    <form action="{{ path('solicitud_visa_estado', {'id': solicitud_visa.id}) }}" id="estado{{ contador }}" method="post">
+                        <select id="estado" name="estado" onchange="this.form.submit()">
+                            <option {% if solicitud_visa.EstadoSolicitudVisa == 'Nueva' %} selected {% endif %} value="Nueva">Nueva</option>
+                            <option {% if solicitud_visa.EstadoSolicitudVisa == 'Procesando' %} selected {% endif %} value="Procesando">Procesando</option>
+                            <option {% if solicitud_visa.EstadoSolicitudVisa == 'Denegada' %} selected {% endif %} value="Denegada">Denegada</option>
+                            <option {% if solicitud_visa.EstadoSolicitudVisa == 'Lista' %} selected {% endif %} value="Lista">Lista</option>
+                        </select>
+                    </form>
+
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <td colspan="3">No se encontraron registros</td>
+                        </tr>
+            {% set contador = contador + 1 %}
+            {% endfor %}
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if is_granted("ROLE_ADMIN")   %}
+            <a href="{{ path('solicitud_visa_new') }}"><button class="btn btn-primary">CREAR NUEVA SOLICITUD DE VISA</button></a>
+       {% elseif is_granted("ROLE_USER") or is_granted("ROLE_SUCURSAL")  %}
+            <a href="{{ path('solicitud_visa_new2') }}"><button class="btn btn-primary">CREAR NUEVA SOLICITUD DE VISA</button></a>
+
+        {% endif %}
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $.fn.dataTableExt.afnFiltering.push(
+                function(oSettings, aData, iDataIndex) {
+                    var resultado = true;
+                    var inicio_min  = $('#iniciofechaini').val();
+                    var inicio_max  = $('#iniciofechafin').val();
+//                    var fin_min  = $('#finfechaini').val();
+//                    var fin_max  = $('#finfechafin').val();
+                    var estado  = $('#estado').val();
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                        var sucursal  = $('#sucursal').val();
+                        var bool_sucursal = false;
+                        var sucursalCol = aData[5];
+                    {% endif %}
+                    var inicioTramite = aData[3];
+//                    var finTramite = aData[5];
+                    var estadoCol = aData[3];
+                    var bool_inicio_min = false;
+                    var bool_inicio_max = false;
+//                    var bool_fin_min = false;
+//                    var bool_fin_max = false;
+                    var bool_estado = false;
+
+                    var fechaInicioTramite = "";
+//                    var fechaFinTramite = "";
+
+                    if(inicioTramite != "") {
+                        fechaTramite = Date.parse(inicioTramite);
+                        fechaInicioTramite = new Date(fechaTramite);
+                    }
+//                    if(finTramite != "") {
+//                        fechaTramite = Date.parse(finTramite);
+//                        fechaFinTramite = new Date(fechaTramite);
+//                    }
+
+                    if (inicio_min != "" && inicio_max == "") {
+                        fechaMin = Date.parse(inicio_min);
+                        fechaInicial = new Date(fechaMin);
+
+                        if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial)
+                            bool_inicio_min = true;
+                        else bool_inicio_min = false;
+                    }
+                    else if(inicio_max != "" && inicio_min == "") {
+                        fechaMax = Date.parse(inicio_max);
+                        fechaFinal = new Date(fechaMax);
+
+                        if (fechaInicioTramite != "" && fechaInicioTramite <= fechaFinal)
+                            bool_inicio_max = true;
+                        else bool_inicio_max = false;
+                    }
+                    else if(inicio_max != "" && inicio_min != ""){
+                        fechaMin = Date.parse(inicio_min);
+                        fechaInicial = new Date(fechaMin);
+
+                        fechaMax = Date.parse(inicio_max);
+                        fechaFinal = new Date(fechaMax);
+
+                        if (fechaInicioTramite != "" && fechaInicioTramite >= fechaInicial && fechaInicioTramite <= fechaFinal) {
+                            bool_inicio_min = true;
+                            bool_inicio_max = true;
+                        }
+                        else {
+                            bool_inicio_min = false;
+                            bool_inicio_max = false;
+                        }
+                    }
+
+//                    if (fin_min != "" && fin_max == "") {
+//                        fechaMin = Date.parse(fin_min);
+//                        fechaInicial = new Date(fechaMin);
+//
+//                        if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial)
+//                            bool_fin_min = true;
+//                        else bool_fin_min = false;
+//                    }
+//                    else if(fin_max != "" && fin_min == "") {
+//                        fechaMax = Date.parse(fin_max);
+//                        fechaFinal = new Date(fechaMax);
+//
+//                        if (fechaFinTramite != "" && fechaFinTramite <= fechaFinal)
+//                            bool_fin_max = true;
+//                        else bool_fin_max = false;
+//                    }
+//                    else if(fin_max != "" && fin_min != ""){
+//                        fechaMin = Date.parse(fin_min);
+//                        fechaInicial = new Date(fechaMin);
+//
+//                        fechaMax = Date.parse(fin_max);
+//                        fechaFinal = new Date(fechaMax);
+//
+//                        if (fechaFinTramite != "" && fechaFinTramite >= fechaInicial && fechaFinTramite <= fechaFinal) {
+//                            bool_fin_min = true;
+//                            bool_fin_max = true;
+//                        }
+//                        else {
+//                            bool_fin_min = false;
+//                            bool_fin_max = false;
+//                        }
+//                    }
+
+                    if(estado != "Seleccione"){
+                        if(estado == estadoCol)
+                            bool_estado = true;
+                        else bool_estado = false;
+                    }
+
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                        if(sucursal != "Seleccione"){
+                            if(sucursal == sucursalCol)
+                                bool_sucursal = true;
+                            else bool_sucursal = false;
+                        }
+                        if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                            || sucursal != "Seleccione" && !bool_sucursal
+                            || estado != "Seleccione" && !bool_estado)
+                            resultado = false;
+                    {% else %}
+                        if(inicio_min != "" && !bool_inicio_min || inicio_max != "" && !bool_inicio_max
+                                || /*fin_min != "" && !bool_fin_min || fin_max != "" && !bool_fin_max || */
+                                estado != "Seleccione" && !bool_estado)
+                            resultado = false;
+                    {% endif %}
+                    return resultado;
+                }
+        );
+
+        $(document).ready(function() {
+            var table = $('#example4').DataTable({
+                responsive: true,
+                language:{
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrado registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total e _MAX_ registros)",
+                    "sInfoPostFix":"",
+                    "sSearch": "BUSCAR:",
+                    "paginate":{
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+
+                dom: '<"col-md-2 inline"l><"col-md-4 inline"B><"col-md-6 inline"f>rt<"col-md-6 inline"i><"col-md-6 inline"p>',
+                buttons: [
+                    {extend: 'print', text: 'Imprimir', orientation: 'landscape', pagesize: 'A4',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5,6,7]
+                        },
+                        customize: function(doc){
+                            doc.content[1].table.widths=[
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%',
+                                '15%'
+                            ]
+                        }
+                    }
+                ]
+            });
+
+            $('#iniciofechaini').change( function() {
+                ini = $('#iniciofechaini').val()
+                $('#iniciofechafin').val(ini);
+            } );
+
+//            $('#finfechaini').change( function() {
+//                fin = $('#finfechaini').val()
+//                $('#finfechafin').val(fin);
+//            } );
+
+            $('.input-daterange').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltrosolicitudvisa') }}",
+                    data: {
+                        'fechainicio': $('#iniciofechaini').val(),
+                        'estado': $('#estado').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+
+            $('#estado').change( function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('setearfiltrosolicitudvisa') }}",
+                    data: {
+                        'fechainicio': $('#iniciofechaini').val(),
+                        'estado': $('#estado').val()
+                    }
+                }).done(function (respuesta) {});
+                table.draw();
+            } );
+
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_VISADO") %}
+                $('#sucursal').change( function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ path('setearfiltroreserva') }}",
+                        data: {
+                            'fechainicio': $('#iniciofechaini').val(),
+                            'estado': $('#estado').val()
+                        }
+                    }).done(function (respuesta) {});
+                    table.draw();
+                } );
+            {% endif %}
+
+        });
+
+        $('#inicio_tramite').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+//        $('#fin_tramite').datepicker({
+//            todayHighlight: true,
+//            format: 'yyyy-mm-dd',
+//            language: 'es',
+//            templates: {
+//                leftArrow: '<i class="la la-angle-left"></i>',
+//                rightArrow: '<i class="la la-angle-right"></i>',
+//            },
+//
+//        });
+
+        //
+    </script>
+
+{% endblock %}

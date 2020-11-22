@@ -1,0 +1,242 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ingresos por paquetes{% endblock %}
+
+{% block body %}
+    <section class="content">
+     <!-- paquetes listos -->
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Reporte Ingresos por paquetes</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table>
+                    <tr>
+                        <td>Fecha ida: </td>
+                        <td>
+                            <div class="input-daterange input-group" id="ida">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="text" id="fechaini" name="fechaini" class="form-control kt-input "  placeholder="Inicio"  />
+                                        </td>
+                                        <td>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="fechafin" name="fechafin" class="form-control kt-input " placeholder="Fin" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+                <br>
+
+        <table id="example4" class="table table-bordered table-striped" width="100%">
+                    <thead>
+                        <tr>
+                    <tr>
+                    <tr>
+                        <th>Código</th>
+                        <th>Fecha de ida</th>
+                        <th>Fecha de regreso</th>
+                        <th>asientos disponibles</th>
+                        <th>Ruta</th>
+                        <th>Aerolinea</th>
+                        <th width="17%">Ingresos</th>
+                        <th width="10%">accciones</th>
+                    </tr>
+                </thead>
+        <tbody>
+        {% for paquete in paquetes %}
+        {% if  paquete.EstadoPaquete   == "Activo"  %}
+            <tr>
+                <td>{{ paquete.codigopaquete }}</td>
+                <td>{{ paquete.fechaida ? paquete.fechaida|date('Y-m-d') : '' }}</td>
+                <td>{{ paquete.fecharegreso ? paquete.fecharegreso|date('Y-m-d') : '' }}</td>
+                <td>{{ paquete.cantasiento }}</td>
+                <td>{{ paquete.Ruta }}</td>
+                <td>{{ paquete.aerolineas }}</td>
+                <td width="17%">${{ paquete.preciototal }}</td>
+
+                <td width="10%">
+                    <a href="{{ path('paquete_show', {'id': paquete.id}) }}"><button class="fa fa-eye btn-sm"></button></a>
+                    <a href="{{ path('imprimeshow_show', {'id': paquete.id}) }}"><button class="fa fa-print btn-sm"></button></a>
+                </td>
+
+            </tr>
+
+             {% endif %}
+        {% else %}
+           <td colspan="3">No se encontraron registros</td>
+                        </tr>
+        {% endfor %}
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total:</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+        </table>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var min  = $('#fechaini').val();
+                var max  = $('#fechafin').val();
+                var ida = aData[1];
+
+                if(ida != "") {
+                    fechaIda = Date.parse(ida);
+                    fechaIda = new Date(fechaIda);
+
+                    if (min != "" && max == "") {
+                        fechaMin = Date.parse(min);
+                        fechaMin = new Date(fechaMin);
+
+                        if (fechaIda >= fechaMin)
+                            return true;
+                        return false;
+                    }
+                    else if(max != "" && min == "") {
+                        fechaMax = Date.parse(max);
+                        fechaMax = new Date(fechaMax);
+
+                        if (fechaIda <= fechaMax)
+                            return true;
+                        return false;
+                    }
+                    else if(max != "" && min != ""){
+                        fechaMin = Date.parse(min);
+                        fechaMin = new Date(fechaMin);
+
+                        fechaMax = Date.parse(max);
+                        fechaMax = new Date(fechaMax);
+
+                        if (fechaIda >= fechaMin && fechaIda <= fechaMax)
+                            return true;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
+
+        $(document).ready(function() {
+            var table = $('#example4').DataTable({
+                responsive: true,
+                language:{
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrado registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total e _MAX_ registros)",
+                    "sInfoPostFix":"",
+                    "sSearch": "BUSCAR:",
+                    "paginate":{
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+
+                dom: '<"col-md-2 inline"l><"col-md-4 inline"B><"col-md-6 inline"f>rt<"col-md-6 inline"i><"col-md-6 inline"p>',
+                buttons: [
+                    {
+                        extend: 'print', text: 'Imprimir', footer: true, orientation: 'landscape', pageSize: 'Letter',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5,6]
+                        },
+                        customize: function(doc){
+                            doc.content[1].table.widths=[
+                                '15%',
+                                '15%',
+                                '15%',
+                                '10%',
+                                '18%',
+                                '18%',
+                                '17%'
+                            ]
+                        }
+                    }
+                ],
+
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(6)
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(6, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Update footer
+                    $( api.column(6).footer() ).html(
+                        '$'+pageTotal +' ($'+ total +' total)'
+                    );
+                }
+
+            });
+
+            $('.input-daterange').change( function() {
+                table.draw();
+            } );
+        });
+
+        $('#ida').datepicker({
+            todayHighlight: true,
+            format: 'yyyy-mm-dd',
+            language: 'es',
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>',
+            },
+        });
+
+
+    </script>
+
+{% endblock %}

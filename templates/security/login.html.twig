@@ -1,0 +1,142 @@
+
+
+{% block title %}{% endblock %}
+
+
+
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    
+    {% block stylesheets %}
+
+    <!-- Bootstrap 3.3.7 -->
+    <link href="{{ asset('assets-conf/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap 3.3.7 -->
+    <link href="{{ asset('assets-conf/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Font Awesome -->
+    <link href="{{ asset('assets-conf/bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Ionicons -->
+    <link href="{{ asset('assets-conf/bower_components/Ionicons/css/ionicons.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Data table -->
+    <link href="{{ asset('assets-conf/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- daterange picker -->
+    <link href="{{ asset('assets-conf/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- bootstrap datepicker -->
+    <link href="{{ asset('assets-conf/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="{{ asset('assets-conf/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Color Picker -->
+    <link href="{{ asset('assets-conf/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap time Picker -->
+    <link href="{{ asset('assets-conf/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Select2 -->
+    <link href="{{ asset('assets-conf/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Theme style -->
+    <link href="{{ asset('assets-conf/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+    <link href="{{ asset('assets-conf/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css">
+
+
+    <!-- Google Font -->
+    {#
+    <link rel="stylesheet" #} {#href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">#}
+
+    <!-- Google Fonts -->
+    {#<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> #}
+    {% endblock %}
+
+<style>html, body {
+	background: #eee;
+	-webkit-box-shadow: inset 0 0 100px rgba(0,0,0,0);
+	box-shadow: inset 0 0 100px rgba(0,0,0,0);
+	height: 100%;
+	min-height: 100%;
+	position: relative;
+}
+#login-wrapper {
+	position: relative;
+	top: 30%;
+}
+#login-wrapper .registration-block {
+	margin-top: 15px;
+}</style>
+</head>
+
+<style>
+        body{
+            background-color: #052453;
+        }
+        #banner{
+
+            width: 10%;
+            height: 5%;
+            margin-top: 2%;
+
+        }
+    </style>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+                    
+                   <h3 class="panel-title"> <center> <img  src="{{ asset('images/logo.png') }} "></center></h3>
+				</div>
+				<div class="panel-body">
+
+					<form id="login-form"  method="post" autocomplete="off">
+                      {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <label for="inputEmail" class="sr-only">Email</label>
+                        <input class="form-control"  type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+			            <br>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input class="form-control" type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+					    <div class="form-group field-loginform-rememberme">
+
+                        <p class="help-block help-block-error"></p>
+
+                </div>
+                </div>
+
+                    <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+					<center><button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button><center>
+					<div class="row registration-block">
+						<div class="col-sm-6">
+													</div>
+						<div class="col-sm-6 text-right">
+													</div>
+					</div>
+					</form>				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('paquete_duplicar', {'id': paquete.id}) }}" onsubmit="return confirm('¿Está seguro que desea duplicar este paquete?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ paquete.id) }}">
+    <button class="fa fa-clone btn-sm" style="color: #3c8dbc"></button>
+</form>

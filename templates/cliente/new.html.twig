@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    
+
+    {{ include('cliente/_form.html.twig') }}
+
+    <a href="{{ path('cliente_index') }}"><button class="btn btn-success">VOLVER AL LISTADO</button></a>
+{% endblock %}
